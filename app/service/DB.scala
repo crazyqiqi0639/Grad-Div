@@ -6,7 +6,7 @@ import java.util.Properties
 import scala.jdk.CollectionConverters._
 
 object DB extends App{
-  val dbConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "abc123")
+  var dbConn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "abc123")
 
   def init(): Unit = {
     createUserTable()
@@ -27,6 +27,11 @@ object DB extends App{
       s")").executeUpdate()
   }
 
+  def insertIntoUser(Application : Int, Name: String, Gender: String): Unit = {
+    dbConn.prepareStatement("INSERT INTO users (Application_Number, Name, Gender) " +
+      s"VALUES ($Application, '$Name', '$Gender');").executeUpdate()
+  }
+
   def createIeltsTable(): Unit = {
     dbConn.prepareStatement(s"Drop TABLE IF EXISTS ielts").executeUpdate()
     dbConn.prepareStatement(s"CREATE TABLE ielts(" +
@@ -38,6 +43,14 @@ object DB extends App{
       s"Writing float, " +
       s"Speaking float" +
       s")").executeUpdate()
+  }
+
+  def insertIntoIelts(Application : Int, Date : String, Overall: Float,
+                      Listening: Float, Reading: Float, Writing: Float, Speaking: Float): Unit = {
+    dbConn.prepareStatement("INSERT INTO ielts(Application_Number, Date, Overall, " +
+      "Listening, Reading, Writing, Speaking) " +
+      s"VALUES ($Application, '$Date', $Overall, " +
+      s"$Listening, $Reading, $Writing, $Speaking);").executeUpdate()
   }
 
   def createToeflCbtTable(): Unit = {
@@ -53,6 +66,14 @@ object DB extends App{
       s")").executeUpdate()
   }
 
+  def insertIntoToeflCbt(Application : Int, Date : String, Overall: Float,
+                      Listening: Float, Reading: Float, Writing: Float, Speaking: Float): Unit = {
+    dbConn.prepareStatement("INSERT INTO toefl_cbt(Application_Number, Date, Overall, " +
+      "Listening, Reading, Writing, Speaking) " +
+      s"VALUES ($Application, '$Date', $Overall, " +
+      s"$Listening, $Reading, $Writing, $Speaking);").executeUpdate()
+  }
+
   def createToeflPbtTable(): Unit = {
     dbConn.prepareStatement(s"Drop TABLE IF EXISTS toefl_pbt").executeUpdate()
     dbConn.prepareStatement(s"CREATE TABLE toefl_pbt(" +
@@ -64,6 +85,14 @@ object DB extends App{
       s"Writing float, " +
       s"Speaking float" +
       s")").executeUpdate()
+  }
+
+  def insertIntoToeflPbt(Application : Int, Date : String, Overall: Float,
+                         Listening: Float, Reading: Float, Writing: Float, Speaking: Float): Unit = {
+    dbConn.prepareStatement("INSERT INTO toefl_pbt(Application_Number, Date, Overall, " +
+      "Listening, Reading, Writing, Speaking) " +
+      s"VALUES ($Application, '$Date', $Overall, " +
+      s"$Listening, $Reading, $Writing, $Speaking);").executeUpdate()
   }
 
   def createToeflIbtTable(): Unit = {
@@ -79,6 +108,14 @@ object DB extends App{
       s")").executeUpdate()
   }
 
+  def insertIntoToeflIbt(Application : Int, Date : String, Overall: Float,
+                         Listening: Float, Reading: Float, Writing: Float, Speaking: Float): Unit = {
+    dbConn.prepareStatement("INSERT INTO toefl_ibt(Application_Number, Date, Overall, " +
+      "Listening, Reading, Writing, Speaking) " +
+      s"VALUES ($Application, '$Date', $Overall, " +
+      s"$Listening, $Reading, $Writing, $Speaking);").executeUpdate()
+  }
+
   def createWorkExpTable(): Unit = {
     dbConn.prepareStatement(s"Drop TABLE IF EXISTS work_exp").executeUpdate()
     dbConn.prepareStatement(s"CREATE TABLE work_exp(" +
@@ -89,6 +126,14 @@ object DB extends App{
       s"Date_to char(50), " +
       s"Duration char(50)" +
       s")").executeUpdate()
+  }
+
+  def insertIntoWorkExp(Application: Int, Name: String, Designation: String,
+                        Date_From: String, Date_to: String, duration: String): Unit = {
+    dbConn.prepareStatement("INSERT INTO toefl_ibt(Application_Number, Name, Designation, " +
+      "Date_From, Date_to, Duration) " +
+      s"VALUES ($Application, '$Name', '$Designation', " +
+      s"'$Date_From', '$Date_to', '$duration');").executeUpdate()
   }
 
   def createStudyExpTable(): Unit = {
@@ -109,7 +154,16 @@ object DB extends App{
       s")").executeUpdate()
   }
 
+  def insertIntoStudyExp(Application_Number: Int, Name: String, Location: String, Qualification: String,
+                         Specialisation: String, Class_Of_Honor: String, End_Date: String, Expect_Complete_Date: String,
+                         Best_Score: Float, GPA: Float, Rank: String, Subsidy: String): Unit = {
+    dbConn.prepareStatement("INSERT INTO toefl_ibt(Application_Number, Name, Location, " +
+      "Qualification, Specialisation, Class_Of_Honor, End_Date, Expect_Complete_Date, " +
+      "Best_Score, GPA, Rank, Subsidy) " +
+      s"VALUES ($Application_Number, '$Name', '$Location', " +
+      s"'$Qualification', '$Specialisation', '$Class_Of_Honor', '$End_Date', '$Expect_Complete_Date', " +
+      s"$Best_Score, $GPA, '$Rank', '$Subsidy');").executeUpdate()
+  }
   init()
-
-
 }
+
