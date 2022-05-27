@@ -2,7 +2,7 @@ package model
 
 import java.util.Date
 
-case class Student(
+case class StudentInfo(
                       applicationNum: Int,
                       studentName: String,
                       studentGender: String,
@@ -83,3 +83,5 @@ case class Student(
                       )
 
 case class Cat(name: String, color: String)
+
+case class Student(ApplicationNum: Long, Name: String, Gender:String )

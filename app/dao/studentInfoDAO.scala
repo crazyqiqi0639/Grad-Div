@@ -3,7 +3,7 @@ package dao
 import java.util.Date
 import javax.inject.{ Inject, Singleton }
 
-import model.Student
+import model.StudentInfo
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.jdbc.JdbcProfile
 
@@ -16,14 +16,14 @@ class studentInfoDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPr
 
   private val Students = TableQuery[studentInfoTable]
 
-  def all(): Future[Seq[Student]] = db.run(Students.result)
+  def all(): Future[Seq[StudentInfo]] = db.run(Students.result)
 
-  def insert(student: Student): Future[Unit] = db.run(Students += student).map { _ => () }
+  def insert(student: StudentInfo): Future[Unit] = db.run(Students += student).map { _ => () }
 
-  class studentInfoTable(tag: Tag) extends Table[Student](tag, "studentInfo") {
+  class studentInfoTable(tag: Tag) extends Table[StudentInfo](tag, "studentInfo") {
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
-    def applicationNum = column[Int]("ID", O.PrimaryKey)
+    def applicationNum = column[Int]("Application_Number", O.PrimaryKey)
     def studentName = column[String]("NAME")
     def studentGender = column[String]("Gender")
     def nameOfCompany1 = column[Option[String]]("Name_Of_Company_1")
@@ -120,6 +120,6 @@ class studentInfoDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPr
   nameOfCompany2, designation2, dateEmployedFrom2, dateEmployedTo2, duration2,
   nameOfCompany3, designation3, dateEmployedFrom3, dateEmployedTo3, duration3,
   nameOfCompany4, designation4, dateEmployedFrom4, dateEmployedTo4
-) <> (Student.tupled, Student.unapply)
+) <> (StudentInfo.tupled, StudentInfo.unapply)
   }
 }
