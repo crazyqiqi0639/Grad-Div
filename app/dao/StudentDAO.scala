@@ -30,9 +30,9 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
 
   class StudentTable(tag: Tag) extends Table[Student](tag, "studentInfo") {
 
-    def applicationNum = column[Long]("Application_Number")
-    def Name = column[String]("NAME")
-    def Gender = column[String]("Gender")
+    def applicationNum = column[Long]("application_number")
+    def Name = column[String]("name")
+    def Gender = column[String]("gender")
 
     def * = (applicationNum, Name, Gender)<>(Student.tupled, Student.unapply)
   }

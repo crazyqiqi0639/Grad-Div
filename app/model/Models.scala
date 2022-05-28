@@ -1,5 +1,7 @@
 package model
 
+import com.google.common.math.DoubleMath
+
 import java.util.Date
 
 case class StudentInfo(
@@ -85,3 +87,48 @@ case class StudentInfo(
 case class Cat(name: String, color: String)
 
 case class Student(ApplicationNum: Long, Name: String, Gender:String )
+
+case class Ielts(ApplicationNum: Long, date: Date, Overall: Double, Listening: Double, Reading: Double, Writing: Double, Speaking: Double)
+
+case class Toefl(
+                  ApplicationNum: Long,
+                  toeflTestDate: Date,
+                  toeflCbtEssay: Option[Int] = None,
+                  toeflCbtListening: Option[Int] = None,
+                  toeflCbtReading: Option[Int] = None,
+                  toeflCbtWriting: Option[Int] = None,
+                  toeflCbtTotal: Option[Int] = None,
+                  toeflPbtWriting: Option[Int] = None,
+                  toeflPbtReading: Option[Int] = None,
+                  toeflPbtListening: Option[Int] = None,
+                  toeflPbtTotal: Option[Int] = None,
+                  toeflIbtReading: Option[Int] = None,
+                  toeflIbtListening: Option[Int] = None,
+                  toeflIbtSpeaking: Option[Int] = None,
+                  toeflIbtWriting: Option[Int] = None,
+                  toeflIbtTotal: Option[Int] = None
+                )
+
+case class WorkExp(
+                  ApplicationNum: Long,
+                  Name: String,
+                  Designation: String,
+                  Date_From: Date,
+                  Date_To: Date,
+                  Duration: String
+                  )
+
+case class StudyExp(
+                   ApplicationNum: Long,
+                   Name: String,
+                   Location: Option[String],
+                   Qualification: Option[String],
+                   Specialisation: Option[String],
+                   ClassOfHonor: Option[String],
+                   EndDate: Option[Date],
+                   ExpectCompleteDate: Option[Date],
+                   BestScore: Option[Double],
+                   Gpa: Option[Double],
+                   Rank: Option[String],
+                   Subsidy: Option[String]
+                   )

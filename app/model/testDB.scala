@@ -1,4 +1,4 @@
-package service
+package model
 
 import java.sql.DriverManager
 import java.time.Duration
