@@ -1,0 +1,28 @@
+@import model.Student
+@(studentForm: Form[Student], students: Seq[Student])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("Student database") {
+    <div>
+        <div id="students">
+            <h2>Insert a student here:</h2>
+
+            @form(routes.HomeController.insertStudent) {
+                @inputText(studentForm("application_number"))
+                @inputText(studentForm("name"))
+                @inputText(studentForm("gender"))
+                @CSRF.formField
+
+                <input type="submit"/>
+            }
+
+            <h2>Previously inserted students:</h2>
+            <table>
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th></tr>
+                @for(s <- students){
+                    <tr><td>@s.ApplicationNum</td><td>@s.Name</td><td>@s.Gender</td></tr>
+                }
+            </table>
+        </div>
+    </div>
+}

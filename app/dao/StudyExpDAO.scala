@@ -23,7 +23,7 @@ class StudyExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     def Name = column[String]("name")
     def Location = column[Option[String]]("location")
     def Qualification = column[Option[String]]("qualification")
-    def Specialisation = column[Option[String]]("specification")
+    def Specialisation = column[Option[String]]("specialisation")
     def ClassOfHonor = column[Option[String]]("class_of_honor")
     def EndDate = column[Option[Date]]("end_date")
     def ExpectCompleteDate = column[Option[Date]]("expect_complete_date")

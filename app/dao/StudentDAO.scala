@@ -28,7 +28,7 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(Students.filter(_.applicationNum === AppNum).update(studentToUpdate)).map(_ => ())
   }
 
-  class StudentTable(tag: Tag) extends Table[Student](tag, "studentInfo") {
+  class StudentTable(tag: Tag) extends Table[Student](tag, "student") {
 
     def applicationNum = column[Long]("application_number")
     def Name = column[String]("name")

@@ -1,15 +1,25 @@
 package controllers
 
+import dao.StudentDAO
+import model.Student
+
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import play.api.data.Form
+import play.api.data.Forms._
+
+import scala.concurrent.ExecutionContext
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(
+                                studentDao: StudentDAO,
+                                mcc: MessagesControllerComponents
+                              ) (implicit executionContext: ExecutionContext) extends MessagesAbstractController(mcc){
 
   /**
    * Create an Action to render an HTML page.
@@ -18,9 +28,34 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
+
+    val studentForm: Form[Student] = Form(
+      mapping(
+        "application_number" -> longNumber,
+        "name" -> text(),
+        "gender" -> text()
+      )(Student.apply)(Student.unapply)
+    )
+
+  def studentIndex= Action.async { implicit  request =>
+    studentDao.all().map {
+      case (students) => Ok(views.html.studentIndex(studentForm, students))
+    }
+  }
+
+  def studentUpdate(AppNum: Long) = Action.async { implicit request =>
+    val student: Student = studentForm.bindFromRequest().get
+    studentDao.update(AppNum, student).map(_ => Redirect(routes.HomeController.studentIndex))
+  }
+
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok{
       request.flash.get("success").getOrElse("Welcome Stranger!")
     }
+  }
+
+  def insertStudent = Action.async { implicit request =>
+    val student: Student = studentForm.bindFromRequest().get
+    studentDao.insert(student).map(_ => Redirect(routes.HomeController.studentIndex))
   }
 }
