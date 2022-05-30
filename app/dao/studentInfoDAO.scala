@@ -46,7 +46,7 @@ class studentInfoDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPr
     def dateEmployedFrom4 = column[Option[Date]]("Date_Employed_From_4")
     def dateEmployedTo4 = column[Option[Date]]("Date_Employed_To_4")
     def duration4 = column[Option[String]]("Duration_4")
-//    def nameOfUniv1 = column[Option[String]]("Name_Of_university_1")
+    def nameOfUniv1 = column[Option[String]]("Name_Of_university_1")
 //    def locationOfUniv1 = column[Option[String]]("Location_1")
 //    def qualificationName1 = column[Option[String]]("Qualification_1")
 //    def specialization1 = column[Option[String]]("Specialisation_1")
