@@ -119,7 +119,7 @@ class studentInfoDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPr
   nameOfCompany1, designation1, dateEmployedFrom1, dateEmployedTo1, duration1,
   nameOfCompany2, designation2, dateEmployedFrom2, dateEmployedTo2, duration2,
   nameOfCompany3, designation3, dateEmployedFrom3, dateEmployedTo3, duration3,
-  nameOfCompany4, designation4, dateEmployedFrom4, dateEmployedTo4
+  nameOfCompany4, designation4, dateEmployedFrom4
 ) <> (StudentInfo.tupled, StudentInfo.unapply)
   }
 }

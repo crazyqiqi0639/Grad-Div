@@ -26,8 +26,6 @@ case class StudentInfo(
                       nameOfCompany4: Option[String] = None,
                       designation4: Option[String] = None,
                       dateEmployedFrom4: Option[Date] = None,
-                      dateEmployedTo4: Option[Date] = None,
-                      duration4: Option[String] = None,
 //                      nameOfUniv1: String,
 //                      locationOfUniv1: String,
 //                      qualificationName1: String,

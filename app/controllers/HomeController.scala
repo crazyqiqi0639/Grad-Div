@@ -43,9 +43,15 @@ class HomeController @Inject()(
     }
   }
 
-  def studentUpdate(AppNum: Long) = Action.async { implicit request =>
-    val student: Student = studentForm.bindFromRequest().get
-    studentDao.update(AppNum, student).map(_ => Redirect(routes.HomeController.studentIndex))
+  def updateStudent(AppNum: Long) = Action.async { implicit request =>
+    studentForm.bindFromRequest().fold(
+      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.editStudentForm(AppNum, formWithErrors))),
+      student => {
+        for {
+          _ <- studentDao.update(AppNum, student)
+        } yield Redirect(routes.HomeController.studentIndex)
+      }
+    )
   }
 
   def index() = Action { implicit request: Request[AnyContent] =>
@@ -58,4 +64,26 @@ class HomeController @Inject()(
     val student: Student = studentForm.bindFromRequest().get
     studentDao.insert(student).map(_ => Redirect(routes.HomeController.studentIndex))
   }
+
+  def editStudent(AppNum: Long) = Action.async{ implicit request =>
+    val students = for {
+      student <- studentDao.findByAppNum(AppNum)
+    } yield student
+
+    students.map{
+      case student =>
+        student match {
+          case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s)))
+          case None => NotFound
+        }
+      }
+    }
+
+  def deleteStudent(AppNum: Long) = Action.async { implicit request =>
+    for {
+      _ <- studentDao.delete(AppNum)
+    } yield Redirect(routes.HomeController.studentIndex)
+
+  }
+
 }

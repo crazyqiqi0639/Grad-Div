@@ -23,6 +23,9 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
   def findByAppNum(AppNum: Long): Future[Option[Student]] =
     db.run(Students.filter(_.applicationNum === AppNum).result.headOption)
 
+  def delete(AppNum: Long): Future[Unit] =
+    db.run(Students.filter(_.applicationNum === AppNum).delete).map(_ => ())
+
   def update(AppNum: Long, student: Student):Future[Unit]= {
     val studentToUpdate: Student = student.copy(AppNum)
     db.run(Students.filter(_.applicationNum === AppNum).update(studentToUpdate)).map(_ => ())
