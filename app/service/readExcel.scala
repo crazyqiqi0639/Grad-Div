@@ -16,13 +16,16 @@ object readExcel extends App {
     for(row <- 1 to xssfSheet.getLastRowNum()){
       //获取表格每一行
       val xssfRow = xssfSheet.getRow(row)
-      for(i <- 0 until xssfRow.getPhysicalNumberOfCells){
-        //获取表格每一行的每一列
-        val title = titleRow.getCell(i).toString
-        val value = xssfRow.getCell(i).toString
-        print(title + ":" +value+" " )
-      }
-      println
+      val value = xssfRow.getCell(10).toString
+      println("Value: s" + value+"s" )
+      println("class: " + xssfRow.getCell(10).getStringCellValue.getClass)
+//      for(i <- 0 until xssfRow.getPhysicalNumberOfCells){
+//        //获取表格每一行的每一列
+//        val title = titleRow.getCell(i).toString
+//        val value = xssfRow.getCell(i).toString
+//        print(title + ":" +value+" " )
+//      }
+//      println
     }
   }
 
