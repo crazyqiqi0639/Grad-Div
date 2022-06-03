@@ -1,0 +1,22 @@
+@import model.Student
+@(studentForm: Form[Student])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main {
+
+    <h1>Add a computer</h1>
+
+    @form(routes.HomeController.saveStudent) {
+            @inputText(studentForm("application_number"))
+            @inputText(studentForm("name"))
+            @inputText(studentForm("gender"))
+            @CSRF.formField
+            <div class="actions">
+                <input type="submit" value="Save this computer" class="btn primary"> or
+                <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+            </div>
+
+    }
+
+}

@@ -17,6 +17,20 @@ class IeltsDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 
   def all(): Future[Seq[Ielts]] = db.run(IeltsReports.result)
 
+  def insert(ielts: Ielts): Future[Unit] =
+    db.run(IeltsReports += ielts).map(_ => ())
+
+  def delete(AppNum: Long): Future[Unit] =
+    db.run(IeltsReports.filter(_.applicationNum === AppNum).delete).map(_ =>())
+
+  def update(AppNum: Long, ielts: Ielts): Future[Unit] = {
+    val ieltsReportToUpdate: Ielts = ielts.copy(AppNum)
+    db.run(IeltsReports.filter(_.applicationNum === AppNum).update(ieltsReportToUpdate)).map(_ => ())
+  }
+
+  def findByAppNum(AppNum: Long): Future[Option[Ielts]] =
+    db.run(IeltsReports.filter(_.applicationNum === AppNum).result.headOption)
+
   class IeltsTable(tag: Tag) extends Table[Ielts](tag, "ielts") {
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 

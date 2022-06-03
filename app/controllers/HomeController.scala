@@ -9,7 +9,7 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -83,7 +83,17 @@ class HomeController @Inject()(
     for {
       _ <- studentDao.delete(AppNum)
     } yield Redirect(routes.HomeController.studentIndex)
+  }
 
+  def saveStudent = Action.async{ implicit request =>
+    studentForm.bindFromRequest().fold(
+      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
+      student => {
+        for {
+          _ <- studentDao.insert(student)
+        } yield Redirect(routes.HomeController.studentIndex).flashing("success" -> "Student %s has been created".format(student.Name))
+      }
+    )
   }
 
 }

@@ -17,6 +17,20 @@ class ToeflDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 
   def all(): Future[Seq[Toefl]] = db.run(ToeflReports.result)
 
+  def insert(toefl: Toefl): Future[Unit] =
+    db.run(ToeflReports += toefl).map(_ => ())
+
+  def findByAppNum(AppNum: Long): Future[Option[Toefl]] =
+    db.run(ToeflReports.filter(_.applicationNum === AppNum).result.headOption)
+
+  def delete(AppNum: Long): Future[Unit] =
+    db.run(ToeflReports.filter(_.applicationNum === AppNum).delete).map(_ => ())
+
+  def update(AppNum: Long, toefl: Toefl): Future[Unit] = {
+    val toeflToUpdate: Toefl = toefl.copy(AppNum)
+    db.run(ToeflReports.filter(_.applicationNum === AppNum).update(toeflToUpdate)).map(_ => ())
+  }
+
   class ToeflTable(tag: Tag) extends Table[Toefl](tag, "toefl") {
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 

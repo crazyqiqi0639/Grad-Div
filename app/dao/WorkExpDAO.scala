@@ -17,6 +17,20 @@ class WorkExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
 
   def all(): Future[Seq[WorkExp]] = db.run(workExps.result)
 
+  def insert(workExp: WorkExp): Future[Unit] =
+    db.run(workExps += workExp).map(_ => ())
+
+  def findByAppNum(AppNum: Long): Future[Option[WorkExp]] =
+    db.run(workExps.filter(_.applicationNum === AppNum).result.headOption)
+
+  def delete(AppNum: Long): Future[Unit] =
+    db.run(workExps.filter(_.applicationNum === AppNum).delete).map(_ => ())
+
+  def update(AppNum: Long, workExp: WorkExp): Future[Unit] = {
+    val workToUpdate: WorkExp = workExp.copy(AppNum)
+    db.run(workExps.filter(_.applicationNum === AppNum).update(workToUpdate)).map(_ => ())
+  }
+
 
   class WorkExpTable(tag: Tag) extends Table[WorkExp](tag, "work") {
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))

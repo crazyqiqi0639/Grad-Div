@@ -16,6 +16,19 @@ class StudyExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
 
   def all(): Future[Seq[StudyExp]] = db.run(StudyExps.result)
 
+  def insert(studyExp: StudyExp) = db.run(StudyExps += studyExp).map{_ => ()}
+
+  def delete(AppNum: Long): Future[Unit] =
+    db.run(StudyExps.filter(_.applicationNum === AppNum).delete).map(_ => ())
+
+  def update(AppNum: Long, studyExp: StudyExp): Future[Unit] = {
+    val studyExpToUpdate: StudyExp = studyExp.copy(AppNum)
+    db.run(StudyExps.filter(_.applicationNum === AppNum).update(studyExpToUpdate).map(_ => ()))
+  }
+
+  def findByAppNum(AppNum: Long): Future[Option[StudyExp]] =
+    db.run(StudyExps.filter(_.applicationNum === AppNum).result.headOption)
+
   class StudyExpTable (tag: Tag) extends Table[StudyExp](tag, "study") {
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
