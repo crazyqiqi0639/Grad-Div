@@ -1,6 +1,6 @@
 package service
 
-import model.Student
+import model.{Student, WorkExp}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 import java.io.{File, FileInputStream}
@@ -24,7 +24,16 @@ object readExcel extends App {
       val student = Student(AppNum, StuName, StuGender)
       val nameOfCompany1 = xssfRow.getCell(3).toString
       val designation1 = xssfRow.getCell(4).toString
-      val dateEmployed1 = xssfRow.getCell(5).getRawValue.toLong
+      val dateEmployedFrom1 = xssfRow.getCell(5).getRawValue.toLong
+      val dateEmployedTo1 = xssfRow.getCell(6).getRawValue.toLong
+      val duration1 = xssfRow.getCell(7).toString
+      val workExperience1 = WorkExp(
+        ApplicationNum = AppNum,
+        Name = nameOfCompany1,
+        Designation = designation1,
+        Date_From = dateEmployedFrom1,
+        Date_To = dateEmployedTo1,
+        Duration = duration1)
       for(i <- 0 until xssfRow.getPhysicalNumberOfCells){
         //获取表格每一行的每一列
         val title = titleRow.getCell(i).toString

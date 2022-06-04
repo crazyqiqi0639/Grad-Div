@@ -109,8 +109,8 @@ case class WorkExp(
                   ApplicationNum: Long,
                   Name: String,
                   Designation: String,
-                  Date_From: Date,
-                  Date_To: Date,
+                  Date_From: Long,
+                  Date_To: Long,
                   Duration: String
                   )
 

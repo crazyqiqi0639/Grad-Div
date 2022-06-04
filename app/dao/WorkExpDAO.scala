@@ -38,8 +38,8 @@ class WorkExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
     def applicationNum = column[Long]("application_number")
     def Name = column[String]("name")
     def Designation = column[String]("designation")
-    def Date_From = column[Date]("date_from")
-    def Date_To = column[Date]("date_to")
+    def Date_From = column[Long]("date_from")
+    def Date_To = column[Long]("date_to")
     def Duration = column[String]("duration")
 
     def * = (applicationNum, Name, Designation, Date_From, Date_To, Duration)<>(WorkExp.tupled, WorkExp.unapply)
