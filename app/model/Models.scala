@@ -82,8 +82,6 @@ case class StudentInfo(
 //                      toeflIbtTotal: Option[Int] = None
                       )
 
-case class Cat(name: String, color: String)
-
 case class Student(ApplicationNum: Long, Name: String, Gender:String )
 
 case class Ielts(ApplicationNum: Long, date: Date, Overall: Double, Listening: Double, Reading: Double, Writing: Double, Speaking: Double)

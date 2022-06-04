@@ -85,15 +85,15 @@ class HomeController @Inject()(
     } yield Redirect(routes.HomeController.studentIndex)
   }
 
-  def saveStudent = Action.async{ implicit request =>
-    studentForm.bindFromRequest().fold(
-      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
-      student => {
-        for {
-          _ <- studentDao.insert(student)
-        } yield Redirect(routes.HomeController.studentIndex).flashing("success" -> "Student %s has been created".format(student.Name))
-      }
-    )
-  }
+//  def saveStudent = Action.async{ implicit request =>
+//    studentForm.bindFromRequest().fold(
+//      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
+//      student => {
+//        for {
+//          _ <- studentDao.insert(student)
+//        } yield Redirect(routes.HomeController.studentIndex).flashing("success" -> "Student %s has been created".format(student.Name))
+//      }
+//    )
+//  }
 
 }
