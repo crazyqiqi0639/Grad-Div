@@ -56,3 +56,8 @@ CREATE TABLE study(
     rank Char(50),
     subsidy Char(50)
 );
+
+CREATE TABLE university(
+    name Char(100) PRIMARY Key NOT NULL,
+    Rank Int
+)

@@ -1,28 +1,26 @@
 @import model.Student
-@(studentForm: Form[Student])(implicit request: MessagesRequestHeader)
+@(studentForm: Form[Student])(implicit messages: Messages)
 
 @import helper._
 
-@()
 
-@main("Welcome to Play") {
-    <h1>Welcome to Play!</h1>
+@main("Create a new student") {
+
+
+    <h1>Add a student</h1>
+
+    @form(routes.HomeController.saveStudent) {
+        <fieldset>
+            @inputText(studentForm("application_number"))
+            @inputText(studentForm("name"))
+            @inputText(studentForm("gender"))
+        </fieldset>>
+            <div class="actions">
+                <input type="submit" value="Create this student" class="btn primary"> or
+                <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+            </div>
+
+
+    }
+
 }
-
-
-
-@*    <h1>Add a computer</h1>*@
-
-@*    @form(routes.HomeController.saveStudent) {*@
-@*            @inputText(studentForm("application_number"))*@
-@*            @inputText(studentForm("name"))*@
-@*            @inputText(studentForm("gender"))*@
-@*            @CSRF.formField*@
-@*            <div class="actions">*@
-@*                <input type="submit" value="Save this computer" class="btn primary"> or*@
-@*                <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>*@
-@*            </div>*@
-
-@*    }*@
-
-@*}*@

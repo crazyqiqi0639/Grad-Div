@@ -54,10 +54,15 @@ class HomeController @Inject()(
     )
   }
 
-  def index() = Action { implicit request: Request[AnyContent] =>
+  def index = Action { implicit request: Request[AnyContent] =>
     Ok{
       request.flash.get("success").getOrElse("Welcome Stranger!")
     }
+  }
+
+  def createStudent = Action.async{ implicit request =>
+    studentDao.all().map(_ => Ok(views.html.createStudentForm(studentForm)))
+
   }
 
   def insertStudent = Action.async { implicit request =>
@@ -85,15 +90,15 @@ class HomeController @Inject()(
     } yield Redirect(routes.HomeController.studentIndex)
   }
 
-//  def saveStudent = Action.async{ implicit request =>
-//    studentForm.bindFromRequest().fold(
-//      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
-//      student => {
-//        for {
-//          _ <- studentDao.insert(student)
-//        } yield Redirect(routes.HomeController.studentIndex).flashing("success" -> "Student %s has been created".format(student.Name))
-//      }
-//    )
-//  }
+  def saveStudent = Action.async{ implicit request =>
+    studentForm.bindFromRequest().fold(
+      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
+      student => {
+        for {
+          _ <- studentDao.insert(student)
+        } yield Redirect(routes.HomeController.studentIndex)
+      }
+    )
+  }
 
 }

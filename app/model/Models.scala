@@ -128,3 +128,8 @@ case class StudyExp(
                    Rank: Option[String],
                    Subsidy: Option[String]
                    )
+
+case class University(
+                     Name: String,
+                     Rank: Int
+                     )

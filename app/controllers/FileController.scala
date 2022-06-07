@@ -30,7 +30,7 @@ class FileController @Inject()(studentDao: StudentDAO,
    * @return
    */
   def toUpload = Action {
-    Ok(views.html.fileupload("文件上传"))
+    Ok(views.html.fileupload("File Upload"))
   }
 
 
@@ -39,7 +39,7 @@ class FileController @Inject()(studentDao: StudentDAO,
    *
    * @return
    */
-  def ajaxUpload() = Action(parse.multipartFormData) {
+  def ajaxUpload = Action(parse.multipartFormData) {
     implicit request => {
       request.body.file("file").map(file => uploadFile(file)).getOrElse(Ok(Json.obj("status" -> "FAIL")))
     }
@@ -51,7 +51,7 @@ class FileController @Inject()(studentDao: StudentDAO,
    *
    * @return
    */
-  def upload() = Action(parse.multipartFormData) {
+  def upload = Action(parse.multipartFormData) {
     implicit request => {
       request.body.file("file").map(file => uploadFile(file)).getOrElse(Ok(Json.obj("status" -> "FAIL")))
     }
@@ -59,12 +59,12 @@ class FileController @Inject()(studentDao: StudentDAO,
 
   private val uploadFile = (file: FilePart[Files.TemporaryFile]) => {
     val fileName = file.filename
-    println(s"文件名:$fileName")
+    println(s"File Name:$fileName")
     var nameSuffix = ""
     //检测文件是否存在后缀名
     if (fileName.lastIndexOf(".") > -1) {
       nameSuffix = fileName.substring(fileName.lastIndexOf("."))
-      println(s"后缀名:$nameSuffix")
+      println(s"Suffix:$nameSuffix")
 
     }
     //给文件取新的随机名

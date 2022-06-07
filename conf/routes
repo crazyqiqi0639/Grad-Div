@@ -10,6 +10,9 @@ GET     /student                    controllers.HomeController.studentIndex
 
 POST    /insert/student             controllers.HomeController.insertStudent
 
+GET     /students/new            controllers.HomeController.createStudent
+POST    /students                controllers.HomeController.saveStudent
+
 GET     /student/:AppNum            controllers.HomeController.editStudent(AppNum: Long)
 POST    /student/:AppNum            controllers.HomeController.updateStudent(AppNum: Long)
 
