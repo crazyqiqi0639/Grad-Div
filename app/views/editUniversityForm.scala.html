@@ -1,0 +1,27 @@
+@import model.University
+@(Name: String, universityForm: Form[University])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("Student database") {
+    <div>
+        <div id="students">
+            <h2>Update Student here:</h2>
+
+            @form() {
+                @inputText(studentForm("name"))
+                @inputText(studentForm("rank"))
+                @CSRF.formField
+
+                <div class="actions">
+                    <input type="submit" value="Save this computer" class="btn primary"> or
+                    <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+                </div>
+            }
+
+            @form() {
+                <input type="submit" value="Delete this cat" class="btn danger">
+                }
+        </div>
+    </div>
+}

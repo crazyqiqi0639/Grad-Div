@@ -133,3 +133,8 @@ case class University(
                      Name: String,
                      Rank: Int
                      )
+
+case class Company(
+                  Name: String,
+                  Rank: Int
+                  )

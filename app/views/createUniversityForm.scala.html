@@ -1,0 +1,25 @@
+@import model.University
+@(universityForm: Form[University])(implicit messages: Messages)
+
+@import helper._
+
+
+@main("Create a new University Record") {
+
+
+    <h1>Add a student</h1>
+
+    @form() {
+        <fieldset>
+            @inputText(universityForm("name"))
+            @inputText(universityForm("rank"))
+        </fieldset>>
+        <div class="actions">
+            <input type="submit" value="Create this university" class="btn primary"> or
+            <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+        </div>
+
+
+    }
+
+}

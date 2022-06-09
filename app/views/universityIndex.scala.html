@@ -1,0 +1,21 @@
+@import model.University
+@(universityForm: Form[University], universities: Seq[University])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("University database") {
+    <div>
+        <div id="actions">
+            <a class="btn success" id="add" href="@routes.HomeController.createStudent">Add a new student</a>
+        </div>
+
+        <div id="students">
+            <h2>Previously inserted students:</h2>
+            <table>
+                <tr><th>Name</th><th>Rank</th></tr>
+                @for(u <- universities){
+                    <tr><td>@u.Name</td><td>@u.Rank</td></tr>
+                }
+            </table>
+        </div>
+    </div>
+}
