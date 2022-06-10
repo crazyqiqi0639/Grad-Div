@@ -1,0 +1,27 @@
+@import model.Company
+@(Name: String, companyForm: Form[Company])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("Company database") {
+    <div>
+        <div id="companies">
+            <h2>Update Company here:</h2>
+
+            @form(routes.CompanyController.updateCompany(Name)) {
+                @inputText(companyForm("name"))
+                @inputText(companyForm("rank"))
+                @CSRF.formField
+
+                <div class="actions">
+                    <input type="submit" value="Save this company" class="btn primary"> or
+                    <a href="@routes.CompanyController.index" class="btn">Cancel</a>
+                </div>
+            }
+
+            @form(routes.CompanyController.deleteCompany(Name)) {
+                <input type="submit" value="Delete this company" class="btn danger">
+                }
+        </div>
+    </div>
+}

@@ -1,0 +1,21 @@
+@import model.Company
+@(companyForm: Form[Company], companies: Seq[Company])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("Company database") {
+    <div>
+        <div id="actions">
+            <a class="btn success" id="add" href="@routes.CompanyController.createCompany">Add a new company</a>
+        </div>
+
+        <div id="students">
+            <h2>Previously inserted companies:</h2>
+            <table>
+                <tr><th>Name</th><th>Rank</th></tr>
+                @for(u <- companies){
+                    <tr><td>@u.Name</td><td>@u.Rank</td></tr>
+                }
+            </table>
+        </div>
+    </div>
+}

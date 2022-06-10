@@ -18,6 +18,29 @@ POST    /student/:AppNum            controllers.HomeController.updateStudent(App
 
 POST    /student/:AppNum/delete           controllers.HomeController.deleteStudent(AppNum: Long)
 
+# university page
+GET     /university                 controllers.UniversityController.index
+
+GET     /universities/new            controllers.UniversityController.createUniversity
+POST    /universities                controllers.UniversityController.saveUniversity
+
+GET     /university/:name            controllers.UniversityController.editUniversity(name: String)
+POST    /university/:name            controllers.UniversityController.updateUniversity(name: String)
+
+POST    /university/:name/delete           controllers.UniversityController.deleteUniversity(name: String)
+
+# company page
+GET     /company                controllers.CompanyController.index
+
+GET     /companies/new            controllers.CompanyController.createCompany
+POST    /companies                controllers.CompanyController.saveCompany
+
+GET     /company/:name            controllers.CompanyController.editCompany(name: String)
+POST    /company/:name            controllers.CompanyController.updateCompany(name: String)
+
+POST    /company/:name/delete           controllers.CompanyController.deleteCompany(name: String)
+
+
 + nocsrf
 POST          /upload                            controllers.FileController.upload
 POST          /ajaxUpload                        controllers.FileController.ajaxUpload

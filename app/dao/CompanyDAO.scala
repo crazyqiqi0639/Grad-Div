@@ -27,6 +27,9 @@ class CompanyDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
     db.run(Companies.filter(_.Name === name).update(companyToUpdate)).map(_ => ())
   }
 
+  def findByName(name: String): Future[Option[Company]] =
+    db.run(Companies.filter(_.Name === name).result.headOption)
+
   class CompanyTable(tag: Tag) extends Table[Company](tag, "company") {
     def Name = column[String]("name")
     def Rank = column[Int]("rank")

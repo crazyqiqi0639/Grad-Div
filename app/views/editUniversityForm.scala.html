@@ -3,24 +3,24 @@
 
 @import helper._
 
-@main("Student database") {
+@main("University database") {
     <div>
-        <div id="students">
-            <h2>Update Student here:</h2>
+        <div id="universities">
+            <h2>Update University here:</h2>
 
-            @form() {
-                @inputText(studentForm("name"))
-                @inputText(studentForm("rank"))
+            @form(routes.UniversityController.updateUniversity(Name)) {
+                @inputText(universityForm("name"))
+                @inputText(universityForm("rank"))
                 @CSRF.formField
 
                 <div class="actions">
-                    <input type="submit" value="Save this computer" class="btn primary"> or
-                    <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+                    <input type="submit" value="Save this university" class="btn primary"> or
+                    <a href="@routes.UniversityController.index" class="btn">Cancel</a>
                 </div>
             }
 
-            @form() {
-                <input type="submit" value="Delete this cat" class="btn danger">
+            @form(routes.UniversityController.deleteUniversity(Name)) {
+                <input type="submit" value="Delete this University" class="btn danger">
                 }
         </div>
     </div>

@@ -7,16 +7,16 @@
 @main("Create a new University Record") {
 
 
-    <h1>Add a student</h1>
+    <h1>Add a university</h1>
 
-    @form() {
+    @form(routes.UniversityController.saveUniversity) {
         <fieldset>
             @inputText(universityForm("name"))
             @inputText(universityForm("rank"))
         </fieldset>>
         <div class="actions">
             <input type="submit" value="Create this university" class="btn primary"> or
-            <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
+            <a href="@routes.UniversityController.index" class="btn">Cancel</a>
         </div>
 
 

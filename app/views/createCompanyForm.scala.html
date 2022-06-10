@@ -1,0 +1,25 @@
+@import model.Company
+@(companyForm: Form[Company])(implicit messages: Messages)
+
+@import helper._
+
+
+@main("Create a new Company Record") {
+
+
+    <h1>Add a company</h1>
+
+    @form(routes.CompanyController.saveCompany) {
+        <fieldset>
+            @inputText(companyForm("name"))
+            @inputText(companyForm("rank"))
+        </fieldset>>
+        <div class="actions">
+            <input type="submit" value="Create this company" class="btn primary"> or
+            <a href="@routes.CompanyController.index" class="btn">Cancel</a>
+        </div>
+
+
+    }
+
+}

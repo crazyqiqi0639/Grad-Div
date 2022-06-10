@@ -27,6 +27,9 @@ class UniversityDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPro
     db.run(Universities.filter(_.Name === name).update(universityToUpdate)).map(_ => ())
   }
 
+  def findByName(name: String): Future[Option[University]] =
+    db.run(Universities.filter(_.Name === name).result.headOption)
+
   class UniversityTable(tag: Tag) extends Table[University](tag, "university") {
     def Name = column[String]("name")
     def Rank = column[Int]("rank")

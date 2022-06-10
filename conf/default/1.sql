@@ -59,5 +59,10 @@ CREATE TABLE study(
 
 CREATE TABLE university(
     name Char(100) PRIMARY Key NOT NULL,
-    Rank Int
-)
+    rank Int
+);
+
+CREATE TABLE company(
+    name Char(100) PRIMARY KEY NOT NULL,
+    rank Int
+);
