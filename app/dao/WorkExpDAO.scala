@@ -36,11 +36,11 @@ class WorkExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvid
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def applicationNum = column[Long]("application_number")
-    def Name = column[String]("name")
-    def Designation = column[String]("designation")
-    def Date_From = column[Long]("date_from")
-    def Date_To = column[Long]("date_to")
-    def Duration = column[String]("duration")
+    def Name = column[Option[String]]("name")
+    def Designation = column[Option[String]]("designation")
+    def Date_From = column[Option[Long]]("date_from")
+    def Date_To = column[Option[Long]]("date_to")
+    def Duration = column[Option[String]]("duration")
 
     def * = (applicationNum, Name, Designation, Date_From, Date_To, Duration)<>(WorkExp.tupled, WorkExp.unapply)
 

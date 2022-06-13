@@ -107,26 +107,28 @@ case class Toefl(
 
 case class WorkExp(
                   ApplicationNum: Long,
-                  Name: String,
-                  Designation: String,
-                  Date_From: Long,
-                  Date_To: Long,
-                  Duration: String
+                  Name: Option[String],
+                  Designation: Option[String],
+                  Date_From: Option[Long],
+                  Date_To: Option[Long],
+                  Duration: Option[String]
                   )
 
 case class StudyExp(
                    ApplicationNum: Long,
-                   Name: String,
+                   Name: Option[String],
                    Location: Option[String],
                    Qualification: Option[String],
                    Specialisation: Option[String],
                    ClassOfHonor: Option[String],
-                   EndDate: Option[Date],
-                   ExpectCompleteDate: Option[Date],
+                   EndDate: Option[Long],
+                   ExpectCompleteDate: Option[Long],
                    BestScore: Option[Double],
                    Gpa: Option[Double],
                    Rank: Option[String],
-                   Subsidy: Option[String]
+                   Subsidy: Option[String],
+                   NameOfCollege: Option[String],
+                   QualificationType: Option[String]
                    )
 
 case class University(

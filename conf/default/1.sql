@@ -54,7 +54,9 @@ CREATE TABLE study(
     best_score float,
     gpa float,
     rank Char(50),
-    subsidy Char(50)
+    subsidy Char(50),
+    name_of_college Char(100),
+    qualification_type Char(100)
 );
 
 CREATE TABLE university(

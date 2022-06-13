@@ -39,7 +39,7 @@ class HomeController @Inject()(
 
   def studentIndex= Action.async { implicit  request =>
     studentDao.all().map {
-      case (students) => Ok(views.html.studentIndex(studentForm, students))
+      case students => Ok(views.html.studentIndex(studentForm, students))
     }
   }
 

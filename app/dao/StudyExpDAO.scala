@@ -33,22 +33,24 @@ class StudyExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def applicationNum = column[Long]("application_number")
-    def Name = column[String]("name")
+    def Name = column[Option[String]]("name")
     def Location = column[Option[String]]("location")
     def Qualification = column[Option[String]]("qualification")
     def Specialisation = column[Option[String]]("specialisation")
     def ClassOfHonor = column[Option[String]]("class_of_honor")
-    def EndDate = column[Option[Date]]("end_date")
-    def ExpectCompleteDate = column[Option[Date]]("expect_complete_date")
+    def EndDate = column[Option[Long]]("end_date")
+    def ExpectCompleteDate = column[Option[Long]]("expect_complete_date")
     def BestScore = column[Option[Double]]("best_score")
     def Gpa = column[Option[Double]]("gpa")
     def Rank = column[Option[String]]("rank")
     def Subsidy = column[Option[String]]("subsidy")
+    def NameOfCollege = column[Option[String]]("name_of_college")
+    def QualicationType = column[Option[String]]("qualification_type")
 
     def * = (
       applicationNum, Name, Location,
       Qualification, Specialisation, ClassOfHonor,
-      EndDate, ExpectCompleteDate, BestScore, Gpa, Rank, Subsidy
+      EndDate, ExpectCompleteDate, BestScore, Gpa, Rank, Subsidy, NameOfCollege, QualicationType
     )<>(StudyExp.tupled, StudyExp.unapply)
   }
 
