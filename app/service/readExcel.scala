@@ -1,6 +1,6 @@
 package service
 
-import model.{Student, StudyExp, WorkExp}
+import model.{Ielts, Student, StudyExp, WorkExp}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 import java.io.{File, FileInputStream}
@@ -95,58 +95,161 @@ object readExcel extends App {
 //        println("Not Jump this one!")
 //      }
 
-      val NameOfUniversity_1: Option[String] = Option {
-        val duration = xssfRow.getCell(23).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(23).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(23) + ": " + NameOfUniversity_1.get + " " + row)
+//      val NameOfUniversity_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(23).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(23).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(23) + ": " + NameOfUniversity_1.get + " " + row)
+//
+//      val Location_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(24).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(24).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(24) + ": " + Location_1.get + " " + row)
+//
+//      val Qualification_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(25).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(25).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(25) + ": " + Qualification_1.get + " " + row)
+//
+//      val Specialisation_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(26).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(26).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(26) + ": " + Specialisation_1.get + " " + row)
+//
+//      val ClassOfHonor_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(27).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(27).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(27) + ": " + ClassOfHonor_1.get + " " + row)
+//
+//      val CourseEndDate_1: Option[Long] = Option {
+//        val raw = xssfRow.getCell(28).getRawValue
+//        if (raw != null) {
+//          val value = raw.toDouble
+//          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+//          val time = sdf.format(date)
+//          sdf.parse(time).getTime
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(28) + ": " + CourseEndDate_1.get + " " + row)
+//
+//      val ExpectEndDate_1: Option[Long] = Option {
+//        val raw = xssfRow.getCell(29).getRawValue
+//        if (raw != null) {
+//          val value = raw.toDouble
+//          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+//          val time = sdf.format(date)
+//          sdf.parse(time).getTime
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(29) + ": " + ExpectEndDate_1.get + " " + row)
+//
+//      val BestScore_1: Option[Double] = Option {
+//        val raw = xssfRow.getCell(30).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(30) + ": " + BestScore_1.get + " " + row)
+//
+//      val GPA_1: Option[Double] = Option {
+//        val raw = xssfRow.getCell(31).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(31) + ": " + GPA_1.get + " " + row)
+//
+//      val Rank_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(32).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(32).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(32) + ": " + Rank_1.get + " " + row)
+//
+//      val Subsidy_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(33).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(33).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(33) + ": " + Subsidy_1.get + " " + row)
+//
+//      val NameofCollege_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(34).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(34).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(34) + ": " + NameofCollege_1.get + " " + row)
+//
+//      val QualificationType_1: Option[String] = Option {
+//        val duration = xssfRow.getCell(35).getRawValue
+//        if (duration != null) {
+//          xssfRow.getCell(35).toString
+//        } else {
+//          "Not Provided"
+//        }
+//      }
+//      println(titleRow.getCell(35) + ": " + QualificationType_1.get + " " + row)
+//
+//      val studyExperience_1 = StudyExp(
+//        ApplicationNum = AppNum,
+//        Name = NameOfUniversity_1,
+//        Location = Location_1,
+//        Qualification = Qualification_1,
+//        Specialisation = Specialisation_1,
+//        ClassOfHonor = ClassOfHonor_1,
+//        EndDate = CourseEndDate_1,
+//        ExpectCompleteDate = ExpectEndDate_1,
+//        BestScore = BestScore_1,
+//        Gpa = GPA_1,
+//        Rank = Rank_1,
+//        Subsidy = Subsidy_1,
+//        NameOfCollege = NameofCollege_1,
+//        QualificationType = QualificationType_1
+//      )
 
-      val Location_1: Option[String] = Option {
-        val duration = xssfRow.getCell(24).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(24).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(24) + ": " + Location_1.get + " " + row)
-
-      val Qualification_1: Option[String] = Option {
-        val duration = xssfRow.getCell(25).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(25).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(25) + ": " + Qualification_1.get + " " + row)
-
-      val Specialisation_1: Option[String] = Option {
-        val duration = xssfRow.getCell(26).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(26).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(26) + ": " + Specialisation_1.get + " " + row)
-
-      val ClassOfHonor_1: Option[String] = Option {
-        val duration = xssfRow.getCell(27).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(27).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(27) + ": " + ClassOfHonor_1.get + " " + row)
-
-      val CourseEndDate_1: Option[Long] = Option {
-        val raw = xssfRow.getCell(28).getRawValue
+      val IeltsTestDate: Option[Long] = Option {
+        val raw = xssfRow.getCell(62).getRawValue
         if (raw != null) {
           val value = raw.toDouble
           val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
@@ -156,96 +259,66 @@ object readExcel extends App {
           0
         }
       }
-      println(titleRow.getCell(28) + ": " + CourseEndDate_1.get + " " + row)
+      println(titleRow.getCell(62) + ": " + IeltsTestDate.get + " " + row)
 
-      val ExpectEndDate_1: Option[Long] = Option {
-        val raw = xssfRow.getCell(29).getRawValue
-        if (raw != null) {
-          val value = raw.toDouble
-          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
-          val time = sdf.format(date)
-          sdf.parse(time).getTime
-        } else {
-          0
-        }
-      }
-      println(titleRow.getCell(29) + ": " + ExpectEndDate_1.get + " " + row)
-
-      val BestScore_1: Option[Double] = Option {
-        val raw = xssfRow.getCell(30).getRawValue
+      val IeltsOverall: Option[Double] = Option {
+        val raw = xssfRow.getCell(63).getRawValue
         if (raw != null) {
           raw.toDouble
         } else {
           0.0
         }
       }
-      println(titleRow.getCell(30) + ": " + BestScore_1.get + " " + row)
+      println(titleRow.getCell(63) + ": " + IeltsOverall.get + " " + row)
 
-      val GPA_1: Option[Double] = Option {
-        val raw = xssfRow.getCell(31).getRawValue
+      val IeltsListening: Option[Double] = Option {
+        val raw = xssfRow.getCell(64).getRawValue
         if (raw != null) {
           raw.toDouble
         } else {
           0.0
         }
       }
-      println(titleRow.getCell(31) + ": " + GPA_1.get + " " + row)
+      println(titleRow.getCell(64) + ": " + IeltsListening.get + " " + row)
 
-      val Rank_1: Option[String] = Option {
-        val duration = xssfRow.getCell(32).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(32).toString
+      val IeltsReading: Option[Double] = Option {
+        val raw = xssfRow.getCell(65).getRawValue
+        if (raw != null) {
+          raw.toDouble
         } else {
-          "Not Provided"
+          0.0
         }
       }
-      println(titleRow.getCell(32) + ": " + Rank_1.get + " " + row)
+      println(titleRow.getCell(65) + ": " + IeltsReading.get + " " + row)
 
-      val Subsidy_1: Option[String] = Option {
-        val duration = xssfRow.getCell(33).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(33).toString
+      val IeltsWriting: Option[Double] = Option {
+        val raw = xssfRow.getCell(66).getRawValue
+        if (raw != null) {
+          raw.toDouble
         } else {
-          "Not Provided"
+          0.0
         }
       }
-      println(titleRow.getCell(33) + ": " + Subsidy_1.get + " " + row)
+      println(titleRow.getCell(66) + ": " + IeltsWriting.get + " " + row)
 
-      val NameofCollege_1: Option[String] = Option {
-        val duration = xssfRow.getCell(34).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(34).toString
+      val IeltsSpeaking: Option[Double] = Option {
+        val raw = xssfRow.getCell(67).getRawValue
+        if (raw != null) {
+          raw.toDouble
         } else {
-          "Not Provided"
+          0.0
         }
       }
-      println(titleRow.getCell(34) + ": " + NameofCollege_1.get + " " + row)
+      println(titleRow.getCell(67) + ": " + IeltsSpeaking.get + " " + row)
 
-      val QualificationType_1: Option[String] = Option {
-        val duration = xssfRow.getCell(35).getRawValue
-        if (duration != null) {
-          xssfRow.getCell(35).toString
-        } else {
-          "Not Provided"
-        }
-      }
-      println(titleRow.getCell(35) + ": " + QualificationType_1.get + " " + row)
-
-      val studyExperience_1 = StudyExp(
+      val IeltsReport = Ielts(
         ApplicationNum = AppNum,
-        Name = NameOfUniversity_1,
-        Location = Location_1,
-        Qualification = Qualification_1,
-        Specialisation = Specialisation_1,
-        ClassOfHonor = ClassOfHonor_1,
-        EndDate = CourseEndDate_1,
-        ExpectCompleteDate = ExpectEndDate_1,
-        BestScore = BestScore_1,
-        Gpa = GPA_1,
-        Rank = Rank_1,
-        Subsidy = Subsidy_1,
-        NameOfCollege = NameofCollege_1,
-        QualificationType = QualificationType_1
+        date = IeltsTestDate,
+        Overall = IeltsOverall,
+        Listening = IeltsListening,
+        Reading = IeltsReading,
+        Writing = IeltsWriting,
+        Speaking = IeltsSpeaking
       )
       println
     }}

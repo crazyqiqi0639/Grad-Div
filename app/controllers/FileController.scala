@@ -1,6 +1,6 @@
 package controllers
 
-import dao.{StudentDAO, WorkExpDAO}
+import dao.{IeltsDAO, StudentDAO, StudyExpDAO, ToeflDAO, WorkExpDAO}
 import model.{Student, StudyExp, WorkExp}
 
 import java.io._
@@ -23,6 +23,9 @@ import scala.util.Random
 @Singleton
 class FileController @Inject()(studentDao: StudentDAO,
                                workExpDao: WorkExpDAO,
+                               studyExpDao: StudyExpDAO,
+                               ieltsDao: IeltsDAO,
+                               toeflDAO: ToeflDAO,
                                cc: ControllerComponents) extends AbstractController(cc) {
 
 
@@ -320,7 +323,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(23) + ": " + NameOfUniversity_1.get + " " + row)
 
         val Location_1: Option[String] = Option {
           val duration = xssfRow.getCell(24).getRawValue
@@ -330,7 +332,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(24) + ": " + Location_1.get + " " + row)
 
         val Qualification_1: Option[String] = Option {
           val duration = xssfRow.getCell(25).getRawValue
@@ -340,7 +341,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(25) + ": " + Qualification_1.get + " " + row)
 
         val Specialisation_1: Option[String] = Option {
           val duration = xssfRow.getCell(26).getRawValue
@@ -350,7 +350,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(26) + ": " + Specialisation_1.get + " " + row)
 
         val ClassOfHonor_1: Option[String] = Option {
           val duration = xssfRow.getCell(27).getRawValue
@@ -360,7 +359,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(27) + ": " + ClassOfHonor_1.get + " " + row)
 
         val CourseEndDate_1: Option[Long] = Option {
           val raw = xssfRow.getCell(28).getRawValue
@@ -373,7 +371,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             0
           }
         }
-        println(titleRow.getCell(28) + ": " + CourseEndDate_1.get + " " + row)
 
         val ExpectEndDate_1: Option[Long] = Option {
           val raw = xssfRow.getCell(29).getRawValue
@@ -386,7 +383,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             0
           }
         }
-        println(titleRow.getCell(29) + ": " + ExpectEndDate_1.get + " " + row)
 
         val BestScore_1: Option[Double] = Option {
           val raw = xssfRow.getCell(30).getRawValue
@@ -396,7 +392,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             0.0
           }
         }
-        println(titleRow.getCell(30) + ": " + BestScore_1.get + " " + row)
 
         val GPA_1: Option[Double] = Option {
           val raw = xssfRow.getCell(31).getRawValue
@@ -406,7 +401,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             0.0
           }
         }
-        println(titleRow.getCell(31) + ": " + GPA_1.get + " " + row)
 
         val Rank_1: Option[String] = Option {
           val duration = xssfRow.getCell(32).getRawValue
@@ -416,7 +410,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(32) + ": " + Rank_1.get + " " + row)
 
         val Subsidy_1: Option[String] = Option {
           val duration = xssfRow.getCell(33).getRawValue
@@ -426,7 +419,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(33) + ": " + Subsidy_1.get + " " + row)
 
         val NameofCollege_1: Option[String] = Option {
           val duration = xssfRow.getCell(34).getRawValue
@@ -436,7 +428,6 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(34) + ": " + NameofCollege_1.get + " " + row)
 
         val QualificationType_1: Option[String] = Option {
           val duration = xssfRow.getCell(35).getRawValue
@@ -446,24 +437,313 @@ class FileController @Inject()(studentDao: StudentDAO,
             "Not Provided"
           }
         }
-        println(titleRow.getCell(35) + ": " + QualificationType_1.get + " " + row)
 
-        val studyExperience_1 = StudyExp(
-          ApplicationNum = AppNum,
-          Name = NameOfUniversity_1,
-          Location = Location_1,
-          Qualification = Qualification_1,
-          Specialisation = Specialisation_1,
-          ClassOfHonor = ClassOfHonor_1,
-          EndDate = CourseEndDate_1,
-          ExpectCompleteDate = ExpectEndDate_1,
-          BestScore = BestScore_1,
-          Gpa = GPA_1,
-          Rank = Rank_1,
-          Subsidy = Subsidy_1,
-          NameOfCollege = NameofCollege_1,
-          QualificationType = QualificationType_1
-        )
+        if (!NameOfUniversity_1.get.equals("Not Provided")){
+          val studyExperience_1 = StudyExp(
+            ApplicationNum = AppNum,
+            Name = NameOfUniversity_1,
+            Location = Location_1,
+            Qualification = Qualification_1,
+            Specialisation = Specialisation_1,
+            ClassOfHonor = ClassOfHonor_1,
+            EndDate = CourseEndDate_1,
+            ExpectCompleteDate = ExpectEndDate_1,
+            BestScore = BestScore_1,
+            Gpa = GPA_1,
+            Rank = Rank_1,
+            Subsidy = Subsidy_1,
+            NameOfCollege = NameofCollege_1,
+            QualificationType = QualificationType_1
+          )
+          studyExpDao.insert(studyExperience_1)
+        }
+
+        val NameOfUniversity_2: Option[String] = Option {
+          val duration = xssfRow.getCell(36).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(36).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Location_2: Option[String] = Option {
+          val duration = xssfRow.getCell(37).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(37).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Qualification_2: Option[String] = Option {
+          val duration = xssfRow.getCell(38).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(38).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Specialisation_2: Option[String] = Option {
+          val duration = xssfRow.getCell(39).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(39).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val ClassOfHonor_2: Option[String] = Option {
+          val duration = xssfRow.getCell(40).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(40).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val CourseEndDate_2: Option[Long] = Option {
+          val raw = xssfRow.getCell(41).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val ExpectEndDate_2: Option[Long] = Option {
+          val raw = xssfRow.getCell(42).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val BestScore_2: Option[Double] = Option {
+          val raw = xssfRow.getCell(43).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val GPA_2: Option[Double] = Option {
+          val raw = xssfRow.getCell(44).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val Rank_2: Option[String] = Option {
+          val duration = xssfRow.getCell(45).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(45).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Subsidy_2: Option[String] = Option {
+          val duration = xssfRow.getCell(46).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(46).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val NameofCollege_2: Option[String] = Option {
+          val duration = xssfRow.getCell(47).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(47).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val QualificationType_2: Option[String] = Option {
+          val duration = xssfRow.getCell(48).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(48).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        if (!NameOfUniversity_2.get.equals("Not Provided")){
+          val studyExperience_2 = StudyExp(
+            ApplicationNum = AppNum,
+            Name = NameOfUniversity_2,
+            Location = Location_2,
+            Qualification = Qualification_2,
+            Specialisation = Specialisation_2,
+            ClassOfHonor = ClassOfHonor_2,
+            EndDate = CourseEndDate_2,
+            ExpectCompleteDate = ExpectEndDate_2,
+            BestScore = BestScore_2,
+            Gpa = GPA_2,
+            Rank = Rank_2,
+            Subsidy = Subsidy_2,
+            NameOfCollege = NameofCollege_2,
+            QualificationType = QualificationType_2
+          )
+          studyExpDao.insert(studyExperience_2)
+        }
+
+        val NameOfUniversity_3: Option[String] = Option {
+          val duration = xssfRow.getCell(49).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(49).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Location_3: Option[String] = Option {
+          val duration = xssfRow.getCell(50).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(50).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Qualification_3: Option[String] = Option {
+          val duration = xssfRow.getCell(51).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(51).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Specialisation_3: Option[String] = Option {
+          val duration = xssfRow.getCell(52).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(52).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val ClassOfHonor_3: Option[String] = Option {
+          val duration = xssfRow.getCell(53).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(53).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val CourseEndDate_3: Option[Long] = Option {
+          val raw = xssfRow.getCell(54).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val ExpectEndDate_3: Option[Long] = Option {
+          val raw = xssfRow.getCell(55).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val BestScore_3: Option[Double] = Option {
+          val raw = xssfRow.getCell(56).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val GPA_3: Option[Double] = Option {
+          val raw = xssfRow.getCell(57).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val Rank_3: Option[String] = Option {
+          val duration = xssfRow.getCell(58).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(58).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val Subsidy_3: Option[String] = Option {
+          val duration = xssfRow.getCell(59).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(59).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val NameofCollege_3: Option[String] = Option {
+          val duration = xssfRow.getCell(60).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(60).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        val QualificationType_3: Option[String] = Option {
+          val duration = xssfRow.getCell(61).getRawValue
+          if (duration != null) {
+            xssfRow.getCell(61).toString
+          } else {
+            "Not Provided"
+          }
+        }
+
+        if (!NameOfUniversity_3.get.equals("Not Provided")){
+          val studyExperience_3 = StudyExp(
+            ApplicationNum = AppNum,
+            Name = NameOfUniversity_3,
+            Location = Location_3,
+            Qualification = Qualification_3,
+            Specialisation = Specialisation_3,
+            ClassOfHonor = ClassOfHonor_3,
+            EndDate = CourseEndDate_3,
+            ExpectCompleteDate = ExpectEndDate_3,
+            BestScore = BestScore_3,
+            Gpa = GPA_3,
+            Rank = Rank_3,
+            Subsidy = Subsidy_3,
+            NameOfCollege = NameofCollege_3,
+            QualificationType = QualificationType_3
+          )
+          studyExpDao.insert(studyExperience_3)
+        }
+
       }
     }
     Ok(Json.obj("status" -> "OK"))

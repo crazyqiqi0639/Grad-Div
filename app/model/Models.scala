@@ -84,11 +84,11 @@ case class StudentInfo(
 
 case class Student(ApplicationNum: Long, Name: String, Gender:String )
 
-case class Ielts(ApplicationNum: Long, date: Date, Overall: Double, Listening: Double, Reading: Double, Writing: Double, Speaking: Double)
+case class Ielts(ApplicationNum: Long, date: Option[Long], Overall: Option[Double], Listening: Option[Double], Reading: Option[Double], Writing: Option[Double], Speaking: Option[Double])
 
 case class Toefl(
                   ApplicationNum: Long,
-                  toeflTestDate: Date,
+                  toeflTestDate: Long,
                   toeflCbtEssay: Option[Int] = None,
                   toeflCbtListening: Option[Int] = None,
                   toeflCbtReading: Option[Int] = None,

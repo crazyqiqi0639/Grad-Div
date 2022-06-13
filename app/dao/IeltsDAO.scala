@@ -35,12 +35,12 @@ class IeltsDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def applicationNum = column[Long]("application_number")
-    def Date = column[Date]("date")
-    def Overall = column[Double]("overall")
-    def Listening = column[Double]("listening")
-    def Reading = column[Double]("reading")
-    def Writing = column[Double]("writing")
-    def Speaking = column[Double]("speaking")
+    def Date = column[Option[Long]]("date")
+    def Overall = column[Option[Double]]("overall")
+    def Listening = column[Option[Double]]("listening")
+    def Reading = column[Option[Double]]("reading")
+    def Writing = column[Option[Double]]("writing")
+    def Speaking = column[Option[Double]]("speaking")
 
 
     def * = (applicationNum, Date, Overall, Listening,

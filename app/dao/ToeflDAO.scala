@@ -35,7 +35,7 @@ class ToeflDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
     implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def applicationNum = column[Long]("application_number")
-    def date = column[Date]("date")
+    def date = column[Long]("date")
     def cbtEssay = column[Option[Int]]("cbt_essay")
     def cbtListening = column[Option[Int]]("cbt_listening")
     def cbtReading = column[Option[Int]]("cbt_reading")
