@@ -1,7 +1,7 @@
 package controllers
 
 import dao.{IeltsDAO, StudentDAO, StudyExpDAO, ToeflDAO, WorkExpDAO}
-import model.{Student, StudyExp, WorkExp}
+import model.{Ielts, Student, StudyExp, Toefl, WorkExp}
 
 import java.io._
 import javax.inject.{Inject, Singleton}
@@ -25,7 +25,7 @@ class FileController @Inject()(studentDao: StudentDAO,
                                workExpDao: WorkExpDAO,
                                studyExpDao: StudyExpDAO,
                                ieltsDao: IeltsDAO,
-                               toeflDAO: ToeflDAO,
+                               toeflDao: ToeflDAO,
                                cc: ControllerComponents) extends AbstractController(cc) {
 
 
@@ -743,6 +743,245 @@ class FileController @Inject()(studentDao: StudentDAO,
           )
           studyExpDao.insert(studyExperience_3)
         }
+
+        /*
+        This part is for Ielts.
+         */
+        val IeltsTestDate: Option[Long] = Option {
+          val raw = xssfRow.getCell(62).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val IeltsOverall: Option[Double] = Option {
+          val raw = xssfRow.getCell(63).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val IeltsListening: Option[Double] = Option {
+          val raw = xssfRow.getCell(64).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val IeltsReading: Option[Double] = Option {
+          val raw = xssfRow.getCell(65).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val IeltsWriting: Option[Double] = Option {
+          val raw = xssfRow.getCell(66).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        val IeltsSpeaking: Option[Double] = Option {
+          val raw = xssfRow.getCell(67).getRawValue
+          if (raw != null) {
+            raw.toDouble
+          } else {
+            0.0
+          }
+        }
+
+        if (IeltsTestDate.get != 0) {
+          val IeltsReport: Ielts = Ielts(
+            ApplicationNum = AppNum,
+            date = IeltsTestDate,
+            Overall = IeltsOverall,
+            Listening = IeltsListening,
+            Reading = IeltsReading,
+            Writing = IeltsWriting,
+            Speaking = IeltsSpeaking
+          )
+          ieltsDao.insert(IeltsReport)
+        }
+
+        /*
+        This part is for toefl part.
+         */
+
+        val ToeflTestDate: Option[Long] = Option {
+          val raw = xssfRow.getCell(68).getRawValue
+          if (raw != null) {
+            val value = raw.toDouble
+            val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+            val time = sdf.format(date)
+            sdf.parse(time).getTime
+          } else {
+            0
+          }
+        }
+
+        val toeflCbtEssay: Option[Int] = Option {
+          val raw = xssfRow.getCell(69).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflCbtListening: Option[Int] = Option {
+          val raw = xssfRow.getCell(70).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflCbtReading: Option[Int] = Option {
+          val raw = xssfRow.getCell(71).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflCbtWriting: Option[Int] = Option {
+          val raw = xssfRow.getCell(72).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflCbtTotal: Option[Int] = Option {
+          val raw = xssfRow.getCell(73).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflPbtWriting: Option[Int] = Option {
+          val raw = xssfRow.getCell(74).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflPbtReading: Option[Int] = Option {
+          val raw = xssfRow.getCell(75).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflPbtListening: Option[Int] = Option {
+          val raw = xssfRow.getCell(76).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflPbtTotal: Option[Int] = Option {
+          val raw = xssfRow.getCell(77).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflIbtReading: Option[Int] = Option {
+          val raw = xssfRow.getCell(78).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflIbtListening: Option[Int] = Option {
+          val raw = xssfRow.getCell(79).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflIbtSpeaking: Option[Int] = Option {
+          val raw = xssfRow.getCell(80).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflIbtWriting: Option[Int] = Option {
+          val raw = xssfRow.getCell(81).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        val toeflIbtTotal: Option[Int] = Option {
+          val raw = xssfRow.getCell(82).getRawValue
+          if (raw != null) {
+            raw.toInt
+          } else {
+            0
+          }
+        }
+
+        if (ToeflTestDate.get != 0) {
+          val ToeflReport = Toefl(
+            ApplicationNum = AppNum,
+            toeflTestDate = ToeflTestDate,
+            toeflCbtEssay = toeflCbtEssay,
+            toeflCbtListening = toeflCbtListening,
+            toeflCbtReading = toeflCbtReading,
+            toeflCbtWriting = toeflCbtWriting,
+            toeflCbtTotal = toeflCbtTotal,
+            toeflPbtWriting = toeflPbtWriting,
+            toeflPbtReading = toeflPbtReading,
+            toeflPbtListening = toeflPbtListening,
+            toeflPbtTotal = toeflPbtTotal,
+            toeflIbtReading = toeflIbtReading,
+            toeflIbtListening = toeflIbtListening,
+            toeflIbtSpeaking = toeflIbtSpeaking,
+            toeflIbtWriting = toeflIbtWriting,
+            toeflIbtTotal = toeflIbtTotal
+          )
+          toeflDao.insert(ToeflReport)
+        }
+
+
 
       }
     }

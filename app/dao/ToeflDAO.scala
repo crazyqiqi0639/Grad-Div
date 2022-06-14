@@ -32,10 +32,9 @@ class ToeflDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
   }
 
   class ToeflTable(tag: Tag) extends Table[Toefl](tag, "toefl") {
-    implicit val dateColumnType = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def applicationNum = column[Long]("application_number")
-    def date = column[Long]("date")
+    def date = column[Option[Long]]("date")
     def cbtEssay = column[Option[Int]]("cbt_essay")
     def cbtListening = column[Option[Int]]("cbt_listening")
     def cbtReading = column[Option[Int]]("cbt_reading")
@@ -53,7 +52,7 @@ class ToeflDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider
 
     def * = (
       applicationNum,date,
-      cbtEssay, cbtListening, cbtReading, cbtWriting, cbtEssay,
+      cbtEssay, cbtListening, cbtReading, cbtWriting, cbtTotal,
       pbtWriting, pbtReading, pbtListening, pbtTotal,
       ibtReading, ibtListening, ibtSpeaking, ibtWriting, ibtTotal
     )<>(Toefl.tupled, Toefl.unapply)

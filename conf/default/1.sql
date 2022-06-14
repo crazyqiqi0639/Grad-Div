@@ -14,7 +14,7 @@ CREATE TABLE ielts(
     speaking float
 );
 
-CREATE TABLE toefl(
+CREATE TABLE toefl (
     application_number Int PRIMARY KEY NOT NULL,
     date BIGINT,
     cbt_essay Int,

@@ -88,21 +88,21 @@ case class Ielts(ApplicationNum: Long, date: Option[Long], Overall: Option[Doubl
 
 case class Toefl(
                   ApplicationNum: Long,
-                  toeflTestDate: Long,
-                  toeflCbtEssay: Option[Int] = None,
-                  toeflCbtListening: Option[Int] = None,
-                  toeflCbtReading: Option[Int] = None,
-                  toeflCbtWriting: Option[Int] = None,
-                  toeflCbtTotal: Option[Int] = None,
-                  toeflPbtWriting: Option[Int] = None,
-                  toeflPbtReading: Option[Int] = None,
-                  toeflPbtListening: Option[Int] = None,
-                  toeflPbtTotal: Option[Int] = None,
-                  toeflIbtReading: Option[Int] = None,
-                  toeflIbtListening: Option[Int] = None,
-                  toeflIbtSpeaking: Option[Int] = None,
-                  toeflIbtWriting: Option[Int] = None,
-                  toeflIbtTotal: Option[Int] = None
+                  toeflTestDate: Option[Long],
+                  toeflCbtEssay: Option[Int],
+                  toeflCbtListening: Option[Int],
+                  toeflCbtReading: Option[Int],
+                  toeflCbtWriting: Option[Int],
+                  toeflCbtTotal: Option[Int],
+                  toeflPbtWriting: Option[Int],
+                  toeflPbtReading: Option[Int],
+                  toeflPbtListening: Option[Int],
+                  toeflPbtTotal: Option[Int],
+                  toeflIbtReading: Option[Int],
+                  toeflIbtListening: Option[Int],
+                  toeflIbtSpeaking: Option[Int],
+                  toeflIbtWriting: Option[Int],
+                  toeflIbtTotal: Option[Int]
                 )
 
 case class WorkExp(

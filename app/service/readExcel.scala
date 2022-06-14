@@ -248,78 +248,232 @@ object readExcel extends App {
 //        QualificationType = QualificationType_1
 //      )
 
-      val IeltsTestDate: Option[Long] = Option {
-        val raw = xssfRow.getCell(62).getRawValue
-        if (raw != null) {
-          val value = raw.toDouble
-          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
-          val time = sdf.format(date)
-          sdf.parse(time).getTime
-        } else {
-          0
-        }
-      }
-      println(titleRow.getCell(62) + ": " + IeltsTestDate.get + " " + row)
+//      val IeltsTestDate: Option[Long] = Option {
+//        val raw = xssfRow.getCell(62).getRawValue
+//        if (raw != null) {
+//          val value = raw.toDouble
+//          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+//          val time = sdf.format(date)
+//          sdf.parse(time).getTime
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(62) + ": " + IeltsTestDate.get + " " + row)
+//
+//      val IeltsOverall: Option[Double] = Option {
+//        val raw = xssfRow.getCell(63).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(63) + ": " + IeltsOverall.get + " " + row)
+//
+//      val IeltsListening: Option[Double] = Option {
+//        val raw = xssfRow.getCell(64).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(64) + ": " + IeltsListening.get + " " + row)
+//
+//      val IeltsReading: Option[Double] = Option {
+//        val raw = xssfRow.getCell(65).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(65) + ": " + IeltsReading.get + " " + row)
+//
+//      val IeltsWriting: Option[Double] = Option {
+//        val raw = xssfRow.getCell(66).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(66) + ": " + IeltsWriting.get + " " + row)
+//
+//      val IeltsSpeaking: Option[Double] = Option {
+//        val raw = xssfRow.getCell(67).getRawValue
+//        if (raw != null) {
+//          raw.toDouble
+//        } else {
+//          0.0
+//        }
+//      }
+//      println(titleRow.getCell(67) + ": " + IeltsSpeaking.get + " " + row)
+//
+//      val IeltsReport = Ielts(
+//        ApplicationNum = AppNum,
+//        date = IeltsTestDate,
+//        Overall = IeltsOverall,
+//        Listening = IeltsListening,
+//        Reading = IeltsReading,
+//        Writing = IeltsWriting,
+//        Speaking = IeltsSpeaking
+//      )
 
-      val IeltsOverall: Option[Double] = Option {
-        val raw = xssfRow.getCell(63).getRawValue
-        if (raw != null) {
-          raw.toDouble
-        } else {
-          0.0
-        }
-      }
-      println(titleRow.getCell(63) + ": " + IeltsOverall.get + " " + row)
+//      val ToeflTestDate: Option[Long] = Option {
+//        val raw = xssfRow.getCell(68).getRawValue
+//        if (raw != null) {
+//          val value = raw.toDouble
+//          val date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value)
+//          val time = sdf.format(date)
+//          sdf.parse(time).getTime
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(68) + ": " + ToeflTestDate.get + " " + row)
+//
+//      val toeflCbtEssay: Option[Int] = Option {
+//        val raw = xssfRow.getCell(69).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(69) + ": " + toeflCbtEssay.get + " " + row)
+//
+//      val toeflCbtListening: Option[Int] = Option {
+//        val raw = xssfRow.getCell(70).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(70) + ": " + toeflCbtListening.get + " " + row)
+//
+//      val toeflCbtReading: Option[Int] = Option {
+//        val raw = xssfRow.getCell(71).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(71) + ": " + toeflCbtReading.get + " " + row)
+//
+//      val toeflCbtWriting: Option[Int] = Option {
+//        val raw = xssfRow.getCell(72).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(72) + ": " + toeflCbtWriting.get + " " + row)
+//
+//      val toeflCbtTotal: Option[Int] = Option {
+//        val raw = xssfRow.getCell(73).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(73) + ": " + toeflCbtTotal.get + " " + row)
+//
+//      val toeflPbtWriting: Option[Int] = Option {
+//        val raw = xssfRow.getCell(74).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(74) + ": " + toeflPbtWriting.get + " " + row)
+//
+//      val toeflPbtReading: Option[Int] = Option {
+//        val raw = xssfRow.getCell(75).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(75) + ": " + toeflPbtReading.get + " " + row)
+//
+//      val toeflPbtListening: Option[Int] = Option {
+//        val raw = xssfRow.getCell(76).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(76) + ": " + toeflPbtListening.get + " " + row)
+//
+//      val toeflPbtTotal: Option[Int] = Option {
+//        val raw = xssfRow.getCell(77).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(77) + ": " + toeflPbtTotal.get + " " + row)
+//
+//      val toeflIbtReading: Option[Int] = Option {
+//        val raw = xssfRow.getCell(78).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(78) + ": " + toeflIbtReading.get + " " + row)
+//
+//      val toeflIbtListening: Option[Int] = Option {
+//        val raw = xssfRow.getCell(79).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(79) + ": " + toeflIbtListening.get + " " + row)
+//
+//      val toeflIbtSpeaking: Option[Int] = Option {
+//        val raw = xssfRow.getCell(80).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(80) + ": " + toeflIbtSpeaking.get + " " + row)
+//
+//      val toeflIbtWriting: Option[Int] = Option {
+//        val raw = xssfRow.getCell(81).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(81) + ": " + toeflIbtWriting.get + " " + row)
+//
+//      val toeflIbtTotal: Option[Int] = Option {
+//        val raw = xssfRow.getCell(82).getRawValue
+//        if (raw != null) {
+//          raw.toInt
+//        } else {
+//          0
+//        }
+//      }
+//      println(titleRow.getCell(82) + ": " + toeflIbtTotal.get + " " + row)
 
-      val IeltsListening: Option[Double] = Option {
-        val raw = xssfRow.getCell(64).getRawValue
-        if (raw != null) {
-          raw.toDouble
-        } else {
-          0.0
-        }
-      }
-      println(titleRow.getCell(64) + ": " + IeltsListening.get + " " + row)
-
-      val IeltsReading: Option[Double] = Option {
-        val raw = xssfRow.getCell(65).getRawValue
-        if (raw != null) {
-          raw.toDouble
-        } else {
-          0.0
-        }
-      }
-      println(titleRow.getCell(65) + ": " + IeltsReading.get + " " + row)
-
-      val IeltsWriting: Option[Double] = Option {
-        val raw = xssfRow.getCell(66).getRawValue
-        if (raw != null) {
-          raw.toDouble
-        } else {
-          0.0
-        }
-      }
-      println(titleRow.getCell(66) + ": " + IeltsWriting.get + " " + row)
-
-      val IeltsSpeaking: Option[Double] = Option {
-        val raw = xssfRow.getCell(67).getRawValue
-        if (raw != null) {
-          raw.toDouble
-        } else {
-          0.0
-        }
-      }
-      println(titleRow.getCell(67) + ": " + IeltsSpeaking.get + " " + row)
-
-      val IeltsReport = Ielts(
-        ApplicationNum = AppNum,
-        date = IeltsTestDate,
-        Overall = IeltsOverall,
-        Listening = IeltsListening,
-        Reading = IeltsReading,
-        Writing = IeltsWriting,
-        Speaking = IeltsSpeaking
-      )
       println
     }}
 

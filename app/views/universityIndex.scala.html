@@ -5,11 +5,11 @@
 @main("University database") {
     <div>
         <div id="actions">
-            <a class="btn success" id="add" href="@routes.UniversityController.createUniversity">Add a new student</a>
+            <a class="btn success" id="add" href="@routes.UniversityController.createUniversity">Add a new University</a>
         </div>
 
         <div id="students">
-            <h2>Previously inserted students:</h2>
+            <h2>Previously inserted universities:</h2>
             <table>
                 <tr><th>Name</th><th>Rank</th></tr>
                 @for(u <- universities){
