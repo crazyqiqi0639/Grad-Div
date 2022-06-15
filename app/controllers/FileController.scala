@@ -980,9 +980,6 @@ class FileController @Inject()(studentDao: StudentDAO,
           )
           toeflDao.insert(ToeflReport)
         }
-
-
-
       }
     }
     Ok(Json.obj("status" -> "OK"))

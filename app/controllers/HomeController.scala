@@ -8,6 +8,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.libs.json.Json
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -84,11 +85,19 @@ class HomeController @Inject()(
       }
     }
 
-  def deleteStudent(AppNum: Long) = Action.async { implicit request =>
-    for {
-      _ <- studentDao.delete(AppNum)
-    } yield Redirect(routes.HomeController.studentIndex)
+  def deleteStudent(AppNum: Long) = Action{
+    studentDao.delete(AppNum)
+    Ok(Json.obj(
+      "status" -> 200
+    ))
+    Redirect(routes.HomeController.studentIndex)
   }
+
+//  def deleteStudent(AppNum: Long) = Action.async { implicit request =>
+//    for {
+//      _ <- studentDao.delete(AppNum)
+//    } yield Redirect(routes.HomeController.studentIndex)
+//  }
 
   def saveStudent = Action.async{ implicit request =>
     studentForm.bindFromRequest().fold(

@@ -16,7 +16,10 @@ POST    /students                controllers.HomeController.saveStudent
 GET     /student/:AppNum            controllers.HomeController.editStudent(AppNum: Long)
 POST    /student/:AppNum            controllers.HomeController.updateStudent(AppNum: Long)
 
+
+GET    /student/:AppNum/delete           controllers.HomeController.deleteStudent(AppNum: Long)
 POST    /student/:AppNum/delete           controllers.HomeController.deleteStudent(AppNum: Long)
+
 
 # university page
 GET     /university                 controllers.UniversityController.index

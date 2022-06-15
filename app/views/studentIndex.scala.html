@@ -1,5 +1,5 @@
 @import model.Student
-@(studentForm: Form[Student], students: Seq[Student])(implicit request: MessagesRequestHeader)
+@(studentForm: Form[Student], students: Seq[Student])
 @import helper._
 
 @main("Student database") {
@@ -11,9 +11,16 @@
         <div id="students">
             <h2>Previously inserted students:</h2>
             <table>
-                <tr><th>Application Number</th><th>Name</th><th>Gender</th></tr>
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>Delete</th></tr>
                 @for(s <- students){
-                    <tr><td>@s.ApplicationNum</td><td>@s.Name</td><td>@s.Gender</td></tr>
+                    <tr>
+                        <td>@s.ApplicationNum</td>
+                        <td>@s.Name</td>
+                        <td>@s.Gender</td>
+                        <td>
+                            <a href="@routes.HomeController.deleteStudent(s.ApplicationNum)">Delete</a>
+                        </td>
+                    </tr>
                 }
             </table>
         </div>
