@@ -61,6 +61,8 @@ CREATE TABLE study(
 
 CREATE TABLE university(
     name Char(100) PRIMARY Key NOT NULL,
+    country Char(100),
+    other Char(500),
     rank Int
 );
 

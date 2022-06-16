@@ -32,10 +32,12 @@ class UniversityDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPro
 
   class UniversityTable(tag: Tag) extends Table[University](tag, "university") {
     def Name = column[String]("name")
+    def Country= column[String]("country")
+    def Other = column[String]("other")
     def Rank = column[Int]("rank")
 
     def * =
-      (Name, Rank)<>(University.tupled, University.unapply)
+      (Name,Country,Other, Rank)<>(University.tupled, University.unapply)
   }
 
 }

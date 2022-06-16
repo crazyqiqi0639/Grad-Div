@@ -18,7 +18,9 @@ class UniversityController @Inject()(
 
   val universityForm: Form[University] = Form(
     mapping(
-      "name" -> text(),
+      "name" -> text,
+      "country" -> text,
+      "other" -> text,
       "rank" -> number
     )(University.apply)(University.unapply)
   )

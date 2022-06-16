@@ -11,9 +11,9 @@
         <div id="students">
             <h2>Previously inserted universities:</h2>
             <table>
-                <tr><th>Name</th><th>Rank</th></tr>
+                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Rank</th></tr>
                 @for(u <- universities){
-                    <tr><td>@u.Name</td><td>@u.Rank</td></tr>
+                    <tr><td>@u.Name</td><td>@u.Country</td><td>@u.Other</td><td>@u.Rank</td></tr>
                 }
             </table>
         </div>

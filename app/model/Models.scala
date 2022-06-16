@@ -133,6 +133,8 @@ case class StudyExp(
 
 case class University(
                      Name: String,
+                     Country: String,
+                     Other: String,
                      Rank: Int
                      )
 
