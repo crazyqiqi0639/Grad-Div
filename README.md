@@ -50,3 +50,17 @@ Then I focus on each part and try to realize the function.
 Second, I will check the official documentation or some other references from the Internet to get some solutions. Then I will write some demo code about the solutions and 
 try to understand how the code run. After that, I will try to write the function for the system, and test it whether it works.
 
+# Record of Developing
+
+## Finished Part
+
+* Upload File and read data into database
+* create, update, delete data( include student data, university data, company data)
+
+
+## What to do next?
+
+* Deal with the wrong data. (For example: wrong university name)
+* Score (Figure out a way to score the student)
+* User Management
+* Better Pages(Frontend)

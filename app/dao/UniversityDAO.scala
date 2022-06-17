@@ -19,6 +19,16 @@ class UniversityDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPro
   def insert(university: University): Future[Unit] =
     db.run(Universities += university).map(_ => ())
 
+  def insert(universities: Seq[University]): Future[Unit] =
+    db.run(this.Universities ++= universities).map(_ => ())
+
+  def count(): Future[Int] = {
+    // this should be changed to
+    // db.run(computers.length.result)
+    // when https://github.com/slick/slick/issues/1237 is fixed
+    db.run(Universities.map(_.Name).length.result)
+  }
+
   def delete(name: String): Future[Unit] =
     db.run(Universities.filter(_.Name === name).delete).map(_ => ())
 
