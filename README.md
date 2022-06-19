@@ -61,6 +61,12 @@ try to understand how the code run. After that, I will try to write the function
 ## What to do next?
 
 * Deal with the wrong data. (For example: wrong university name)
+  * First Match the database to find whether the university is in database or not.
+  * If the university is in database, then pass them through.
+  * If not university is not in database, then use match algorithm to match the result.
+  * How to define the match algorithm? First is to match the shortcut, then try to match the words, limit is 5 char.
 * Score (Figure out a way to score the student)
+  * How to score?
 * User Management
 * Better Pages(Frontend)
+  * Show Students data
