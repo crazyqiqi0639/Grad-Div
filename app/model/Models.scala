@@ -135,6 +135,7 @@ case class University(
                      Name: String,
                      Country: String,
                      Other: String,
+                     Scheme: Int,
                      Rank: Int
                      )
 

@@ -3,7 +3,7 @@ package util
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 
-import dao.{ UniversityDAO }
+import dao.UniversityDAO
 import model.University
 
 import scala.concurrent.{ Await, ExecutionContext }
@@ -25,9 +25,9 @@ class InitialData @Inject() (
 
 }
 
-private[bootstrap] object InitialData {
+private object InitialData {
   def university = Seq(
-    University("Tsinghua University","China","QS: 14",1),
-    University("National University of Singapore","Singapore","Qs: 11",1)
+    University("Tsinghua University","China","QS: 14", 1,1),
+    University("National University of Singapore","Singapore","Qs: 11",1,1)
   )
 }

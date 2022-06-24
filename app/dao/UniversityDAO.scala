@@ -44,10 +44,11 @@ class UniversityDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPro
     def Name = column[String]("name")
     def Country= column[String]("country")
     def Other = column[String]("other")
+    def Scheme = column[Int]("scheme")
     def Rank = column[Int]("rank")
 
     def * =
-      (Name,Country,Other, Rank)<>(University.tupled, University.unapply)
+      (Name,Country,Other, Scheme, Rank)<>(University.tupled, University.unapply)
   }
 
 }
