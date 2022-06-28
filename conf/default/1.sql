@@ -63,10 +63,16 @@ CREATE TABLE university(
     name Char(100) PRIMARY Key NOT NULL,
     country Char(100),
     other Char(500),
+    scheme Int,
     rank Int
 );
 
 CREATE TABLE company(
     name Char(100) PRIMARY KEY NOT NULL,
     rank Int
+);
+
+CREATE TABLE specfactor(
+                        name Char(100) PRIMARY KEY NOT NULL,
+                        factor Int
 );

@@ -1,0 +1,26 @@
+@import model.SpecFactor
+@(Name: String, specFactorForm: Form[SpecFactor])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("University database") {
+    <div>
+        <div id="universities">
+            <h2>Update Specialisation here:</h2>
+
+            @form(routes.ScoreController.update(Name)) {
+                @inputText(specFactorForm("name"))
+                @inputText(specFactorForm("factor"))
+
+                <div class="actions">
+                    <input type="submit" value="Save this specialisation" class="btn primary"> or
+                    <a href="@routes.ScoreController.index" class="btn">Cancel</a>
+                </div>
+            }
+
+            @form(routes.ScoreController.delete(Name)) {
+                <input type="submit" value="Delete this Specialisation" class="btn danger">
+                }
+        </div>
+    </div>
+}

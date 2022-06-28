@@ -11,9 +11,18 @@
         <div id="students">
             <h2>Previously inserted universities:</h2>
             <table>
-                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Rank</th></tr>
+                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Scheme</th><th>Rank</th><th>Delete</th></tr>
                 @for(u <- universities){
-                    <tr><td>@u.Name</td><td>@u.Country</td><td>@u.Other</td><td>@u.Rank</td></tr>
+                    <tr>
+                        <td>@u.Name</td>
+                        <td>@u.Country</td>
+                        <td>@u.Other</td>
+                        <td>@u.Scheme</td>
+                        <td>@u.Rank</td>
+                        <td>
+                            <a href="@routes.UniversityController.deleteUniversity(u.Name)">Delete</a>
+                        </td>
+                    </tr>
                 }
             </table>
         </div>

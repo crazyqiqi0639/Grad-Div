@@ -21,6 +21,7 @@ class UniversityController @Inject()(
       "name" -> text,
       "country" -> text,
       "other" -> text,
+      "scheme" -> number,
       "rank" -> number
     )(University.apply)(University.unapply)
   )

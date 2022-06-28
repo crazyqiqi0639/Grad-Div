@@ -11,7 +11,7 @@
         <div id="students">
             <h2>Previously inserted students:</h2>
             <table>
-                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>Delete</th></tr>
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>Delete</th><th>Edit</th></tr>
                 @for(s <- students){
                     <tr>
                         <td>@s.ApplicationNum</td>
@@ -19,6 +19,9 @@
                         <td>@s.Gender</td>
                         <td>
                             <a href="@routes.HomeController.deleteStudent(s.ApplicationNum)">Delete</a>
+                        </td>
+                        <td>
+                            <a href="@routes.HomeController.editStudent(s.ApplicationNum)">Edit</a>
                         </td>
                     </tr>
                 }

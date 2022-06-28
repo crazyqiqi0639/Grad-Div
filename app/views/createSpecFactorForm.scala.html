@@ -1,0 +1,25 @@
+@import model.SpecFactor
+@(specFactorForm: Form[SpecFactor])(implicit messages: Messages)
+
+@import helper._
+
+
+@main("Create a new University Record") {
+
+
+    <h1>Add a specialisation</h1>
+
+    @form(routes.ScoreController.save) {
+        <fieldset>
+            @inputText(specFactorForm("name"))
+            @inputText(specFactorForm("factor"))
+        </fieldset>
+        <div class="actions">
+            <input type="submit" value="Create this university" class="btn primary"> or
+            <a href="@routes.ScoreController.index" class="btn">Cancel</a>
+        </div>
+
+
+    }
+
+}

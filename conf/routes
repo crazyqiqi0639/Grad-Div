@@ -29,6 +29,7 @@ POST    /universities                controllers.UniversityController.saveUniver
 
 GET     /university/:name            controllers.UniversityController.editUniversity(name: String)
 POST    /university/:name            controllers.UniversityController.updateUniversity(name: String)
+GET     /university/:name/delete     controllers.UniversityController.deleteUniversity(name: String)
 
 POST    /university/:name/delete           controllers.UniversityController.deleteUniversity(name: String)
 
@@ -42,6 +43,18 @@ GET     /company/:name            controllers.CompanyController.editCompany(name
 POST    /company/:name            controllers.CompanyController.updateCompany(name: String)
 
 POST    /company/:name/delete           controllers.CompanyController.deleteCompany(name: String)
+
+# specFactor page
+GET     /specFactor                controllers.ScoreController.index
+
+GET     /specFactor/new            controllers.ScoreController.create
+POST    /specFactor                controllers.ScoreController.save
+
+GET     /specFactor/:name            controllers.ScoreController.edit(name: String)
+POST    /specFactor/:name            controllers.ScoreController.update(name: String)
+GET     /specFactor/:name/delete     controllers.ScoreController.delete(name: String)
+
+POST    /specFactor/:name/delete           controllers.ScoreController.delete(name: String)
 
 
 + nocsrf

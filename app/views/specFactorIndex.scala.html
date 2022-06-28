@@ -1,0 +1,27 @@
+@import model.SpecFactor
+@(specFactorForm: Form[SpecFactor], factors: Seq[SpecFactor])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("Spec Factor database") {
+    <div>
+        <div id="actions">
+            <a class="btn success" id="add" href="@routes.ScoreController.create">Add a new Specialisation</a>
+        </div>
+
+        <div id="students">
+            <h2>Previously inserted specialisations:</h2>
+            <table>
+                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Scheme</th><th>Rank</th><th>Delete</th></tr>
+                @for(u <- factors){
+                    <tr>
+                        <td>@u.Name</td>
+                        <td>@u.Factor</td>
+                        <td>
+                            <a href="@routes.ScoreController.delete(u.Name)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

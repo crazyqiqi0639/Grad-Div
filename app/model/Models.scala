@@ -143,3 +143,7 @@ case class Company(
                   Name: String,
                   Rank: Int
                   )
+case class SpecFactor(
+                     Name: String,
+                     Factor: Int
+                     )
