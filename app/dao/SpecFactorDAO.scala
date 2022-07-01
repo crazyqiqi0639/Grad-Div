@@ -35,7 +35,7 @@ class SpecFactorDAO @Inject() (protected val dbConfigProvider: DatabaseConfigPro
   class SpecFactorTable(tag: Tag) extends Table[SpecFactor](tag, "specfactor") {
 
     def name = column[String]("name")
-    def factor = column[Int]("factor")
+    def factor = column[Double]("factor")
 
     def * = (name, factor) <> (SpecFactor.tupled, SpecFactor.unapply)
   }

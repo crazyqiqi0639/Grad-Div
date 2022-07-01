@@ -74,5 +74,5 @@ CREATE TABLE company(
 
 CREATE TABLE specfactor(
                         name Char(100) PRIMARY KEY NOT NULL,
-                        factor Int
+                        factor float
 );

@@ -145,5 +145,5 @@ case class Company(
                   )
 case class SpecFactor(
                      Name: String,
-                     Factor: Int
+                     Factor: Double
                      )

@@ -11,13 +11,16 @@
         <div id="students">
             <h2>Previously inserted specialisations:</h2>
             <table>
-                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Scheme</th><th>Rank</th><th>Delete</th></tr>
+                <tr><th>Specialisation</th><th>Factor</th><th>Delete</th><th>Edit</th></tr>
                 @for(u <- factors){
                     <tr>
                         <td>@u.Name</td>
                         <td>@u.Factor</td>
                         <td>
                             <a href="@routes.ScoreController.delete(u.Name)">Delete</a>
+                        </td>
+                        <td>
+                            <a href="@routes.ScoreController.edit(u.Name)">Edit</a>
                         </td>
                     </tr>
                 }

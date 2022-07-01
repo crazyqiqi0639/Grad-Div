@@ -1,5 +1,6 @@
 @import model.Student
-@(AppNum: Long, studentForm: Form[Student])(implicit request: MessagesRequestHeader)
+@import model.StudyExp
+@(AppNum: Long, studentForm: Form[Student], studyExp: StudyExp)(implicit request: MessagesRequestHeader)
 
 @import helper._
 
@@ -23,6 +24,18 @@
             @form(routes.HomeController.deleteStudent(AppNum)) {
                 <input type="submit" value="Delete this cat" class="btn danger">
                 }
+        </div>
+
+        <div id="students">
+            <h2>Student's Study Experience</h2>
+            <table>
+                <tr><th>Application Number</th><th>Name</th></tr>
+                <tr>
+                    <td>@studyExp.ApplicationNum</td>
+                    <td>@studyExp.Name</td>
+                </tr>
+
+            </table>
         </div>
     </div>
 }

@@ -1,13 +1,14 @@
 package controllers
 
-import dao.StudentDAO
-import model.Student
+import dao.{StudentDAO, StudyExpDAO}
+import model.{Student, StudyExp}
 
 import javax.inject._
 import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.libs.json.Json
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -19,6 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class HomeController @Inject()(
                                 studentDao: StudentDAO,
+                                studyExpDAO: StudyExpDAO,
                                 mcc: MessagesControllerComponents
                               ) (implicit executionContext: ExecutionContext) extends MessagesAbstractController(mcc){
 
@@ -38,15 +40,34 @@ class HomeController @Inject()(
       )(Student.apply)(Student.unapply)
     )
 
+//  val studyExpForm: Form[StudyExp] = Form(
+//    mapping(
+//      "application_number" -> longNumber,
+//      "name" -> text(),
+//      "location" -> text(),
+//      "qualification" -> text(),
+//      "specialisation" -> text(),
+//      "class_of_honor" -> text(),
+//      "end_date" -> longNumber,
+//      "expect_complete_date" -> longNumber,
+//      "best_score" -> of(doubleFormat),
+//      "gpa" -> of(doubleFormat),
+//      "rank" -> text(),
+//      "subsidy" -> text(),
+//      "name_of_college" -> text(),
+//      "qualification_type" -> text()
+//    )(StudyExp.apply(StudyExp.unapply)
+//  )
+
   def studentIndex= Action.async { implicit  request =>
     studentDao.all().map {
-      case students => Ok(views.html.studentIndex(studentForm, students))
+      case students => Ok(views.html.studentIndex(students))
     }
   }
 
   def updateStudent(AppNum: Long) = Action.async { implicit request =>
     studentForm.bindFromRequest().fold(
-      formWithErrors => studentDao.all().map(_ => BadRequest(views.html.editStudentForm(AppNum, formWithErrors))),
+      formWithErrors => studyExpDAO.findByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp.get))),
       student => {
         for {
           _ <- studentDao.update(AppNum, student)
@@ -72,14 +93,15 @@ class HomeController @Inject()(
   }
 
   def editStudent(AppNum: Long) = Action.async{ implicit request =>
-    val students = for {
+    val studentInfo = for {
       student <- studentDao.findByAppNum(AppNum)
-    } yield student
+      studyExp <- studyExpDAO.findByAppNum(AppNum)
+    } yield (student, studyExp)
 
-    students.map{
-      case student =>
+    studentInfo.map{
+      case (student, studyExp) =>
         student match {
-          case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s)))
+          case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s), studyExp.get))
           case None => NotFound
         }
       }

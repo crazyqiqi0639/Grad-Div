@@ -7,19 +7,22 @@ import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formats._
 import scala.concurrent.{ExecutionContext, Future}
+import util.stringdistance.StringDistance.jaccard
 
 @Singleton
 class ScoreController @Inject()
-(
-specFactorDao: SpecFactorDAO,
-mcc: MessagesControllerComponents
-) (implicit executionContext: ExecutionContext) extends MessagesAbstractController(mcc){
+  (
+    specFactorDao: SpecFactorDAO,
+    mcc: MessagesControllerComponents
+  ) (implicit executionContext: ExecutionContext) extends MessagesAbstractController(mcc){
 
   val specFactorForm: Form[SpecFactor] = Form(
     mapping(
       "name" -> text,
-      "factor" -> number
+//      "factor" -> default(number, 0)
+      "factor" -> default(of(doubleFormat),0.0)
     )(SpecFactor.apply)(SpecFactor.unapply)
   )
 
@@ -52,7 +55,7 @@ mcc: MessagesControllerComponents
       formWithError => specFactorDao.all().map(_ => BadRequest(views.html.createSpecFactorForm(formWithError))),
       factor => {
         for {
-          _ <- specFactorDao.insert(factor)
+          _ <- specFactorDao.insert(SpecFactor(factor.Name, jaccard("computer science", factor.Name)))
         } yield Redirect(routes.ScoreController.index)
       }
     )
@@ -61,9 +64,9 @@ mcc: MessagesControllerComponents
   def update(name: String) = Action.async{ implicit rs =>
     specFactorForm.bindFromRequest().fold(
       formWithError => specFactorDao.all().map(_ => BadRequest(views.html.editSpecFactorForm(name, formWithError))),
-      university => {
+      factor => {
         for {
-          - <- specFactorDao.update(name, university)
+          - <- specFactorDao.update(name, factor)
         } yield Redirect(routes.ScoreController.index)
       }
     )
