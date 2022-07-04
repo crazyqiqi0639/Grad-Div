@@ -26,6 +26,9 @@ class StudyExpDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(StudyExps.filter(_.applicationNum === AppNum).update(studyExpToUpdate).map(_ => ()))
   }
 
+  def findAllByAppNum(AppNum: Long): Future[Seq[StudyExp]] =
+    db.run(StudyExps.filter(_.applicationNum === AppNum).result)
+
   def findByAppNum(AppNum: Long): Future[Option[StudyExp]] =
     db.run(StudyExps.filter(_.applicationNum === AppNum).result.headOption)
 

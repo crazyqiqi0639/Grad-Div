@@ -1,7 +1,7 @@
 package controllers
 
 import dao.{StudentDAO, StudyExpDAO}
-import model.{Student, StudyExp}
+import model.{SpecFactor, Student, StudyExp}
 
 import javax.inject._
 import play.api._
@@ -40,24 +40,24 @@ class HomeController @Inject()(
       )(Student.apply)(Student.unapply)
     )
 
-//  val studyExpForm: Form[StudyExp] = Form(
-//    mapping(
-//      "application_number" -> longNumber,
-//      "name" -> text(),
-//      "location" -> text(),
-//      "qualification" -> text(),
-//      "specialisation" -> text(),
-//      "class_of_honor" -> text(),
-//      "end_date" -> longNumber,
-//      "expect_complete_date" -> longNumber,
-//      "best_score" -> of(doubleFormat),
-//      "gpa" -> of(doubleFormat),
-//      "rank" -> text(),
-//      "subsidy" -> text(),
-//      "name_of_college" -> text(),
-//      "qualification_type" -> text()
-//    )(StudyExp.apply(StudyExp.unapply)
-//  )
+  val studyExpForm: Form[StudyExp] = Form(
+    mapping(
+            "application_number" -> longNumber,
+            "name" -> optional(text()),
+            "location" -> optional(text()),
+            "qualification" -> optional(text()),
+            "specialisation" -> optional(text()),
+            "class_of_honor" -> optional(text()),
+            "end_date" -> optional(longNumber),
+            "expect_complete_date" -> optional(longNumber),
+            "best_score" -> optional(of(doubleFormat)),
+            "gpa" -> optional(of(doubleFormat)),
+            "rank" -> optional(text()),
+            "subsidy" -> optional(text()),
+            "name_of_college" -> optional(text()),
+            "qualification_type" -> optional(text())
+    )(StudyExp.apply)(StudyExp.unapply)
+  )
 
   def studentIndex= Action.async { implicit  request =>
     studentDao.all().map {
@@ -67,7 +67,7 @@ class HomeController @Inject()(
 
   def updateStudent(AppNum: Long) = Action.async { implicit request =>
     studentForm.bindFromRequest().fold(
-      formWithErrors => studyExpDAO.findByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp.get))),
+      formWithErrors => studyExpDAO.findAllByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp))),
       student => {
         for {
           _ <- studentDao.update(AppNum, student)
@@ -95,13 +95,13 @@ class HomeController @Inject()(
   def editStudent(AppNum: Long) = Action.async{ implicit request =>
     val studentInfo = for {
       student <- studentDao.findByAppNum(AppNum)
-      studyExp <- studyExpDAO.findByAppNum(AppNum)
+      studyExp <- studyExpDAO.findAllByAppNum(AppNum)
     } yield (student, studyExp)
 
     studentInfo.map{
       case (student, studyExp) =>
         student match {
-          case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s), studyExp.get))
+          case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s), studyExp))
           case None => NotFound
         }
       }

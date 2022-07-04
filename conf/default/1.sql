@@ -34,7 +34,7 @@ CREATE TABLE toefl (
 );
 
 CREATE TABLE work (
-    application_number Int PRIMARY KEY NOT NULL,
+    application_number Int NOT NULL,
     name Char(50),
     designation Char(50),
     date_from BIGINT,
@@ -43,7 +43,7 @@ CREATE TABLE work (
 );
 
 CREATE TABLE study(
-    application_number Int PRIMARY KEY NOT NULL,
+    application_number Int NOT NULL,
     name Char(50),
     location Char(50),
     qualification Char(50),

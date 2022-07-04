@@ -1,6 +1,6 @@
 @import model.Student
 @import model.StudyExp
-@(AppNum: Long, studentForm: Form[Student], studyExp: StudyExp)(implicit request: MessagesRequestHeader)
+@(AppNum: Long, studentForm: Form[Student], studyExp: Seq[StudyExp])(implicit request: MessagesRequestHeader)
 
 @import helper._
 
@@ -16,25 +16,41 @@
                 
 
                 <div class="actions">
-                    <input type="submit" value="Save this computer" class="btn primary"> or
+                    <input type="submit" value="Save this student" class="btn primary"> or
                     <a href="@routes.HomeController.studentIndex" class="btn">Cancel</a>
                 </div>
             }
 
             @form(routes.HomeController.deleteStudent(AppNum)) {
-                <input type="submit" value="Delete this cat" class="btn danger">
+                <input type="submit" value="Delete this student" class="btn danger">
                 }
         </div>
 
         <div id="students">
             <h2>Student's Study Experience</h2>
             <table>
-                <tr><th>Application Number</th><th>Name</th></tr>
                 <tr>
-                    <td>@studyExp.ApplicationNum</td>
-                    <td>@studyExp.Name</td>
+                    <th>Application Number</th>
+                    <th>Name of University</th>
+                    <th>Location of University</th>
+                    <th>Qualification</th>
+                    <th>Specialisation</th>
+                    <th>GPA/Best Score</th>
+                    <th>Rank</th>
+                    <th>Class of Honor</th>
                 </tr>
-
+                @for(s <- studyExp){
+                    <tr>
+                        <td>@s.ApplicationNum</td>
+                        <td>@s.Name</td>
+                        <td>@s.Location</td>
+                        <td>@s.QualificationType</td>
+                        <td>@s.Specialisation</td>
+                        <td>@s.Gpa + / + @s.BestScore</td>
+                        <td>@s.Rank</td>
+                        <td>@s.ClassOfHonor</td>
+                    </tr>
+                }
             </table>
         </div>
     </div>
