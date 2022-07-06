@@ -1,5 +1,25 @@
 @()
 
 @main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
+  <h1>Welcome to Grad Div Reviewing System!</h1>
+
+  <div id="actions">
+    <a class="btn success" id="add" href="@routes.HomeController.studentIndex">Check Student</a>
+  </div>
+
+  <div id="actions">
+    <a class="btn success" id="add" href="@routes.UniversityController.index">Check University</a>
+  </div>
+
+  <div id="actions">
+    <a class="btn success" id="add" href="@routes.CompanyController.index">Check Company</a>
+  </div>
+
+  <div id="actions">
+    <a class="btn success" id="add" href="@routes.FileController.toUpload">File Upload</a>
+  </div>
+
+  <div id="actions">
+    <a class="btn success" id="add" href="@routes.ScoreController.index">Check Factor</a>
+  </div>
 }

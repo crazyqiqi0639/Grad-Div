@@ -28,7 +28,9 @@ The Formulation is:
 object CalScore{
   var UnivRankMap:Map[Int, Double] = Map()
   UnivRankMap += (1 -> 1.0)
-  UnivRankMap += (2 -> 0.8)
+  UnivRankMap += (2 -> 0.9)
+  UnivRankMap += (3 -> 0.8)
+  UnivRankMap += (4 -> 0.7)
 
   var QualificationMap:Map[String, Double] = Map()
   QualificationMap += ("BACHELOR'S DEGREE" -> 0.8)
@@ -42,9 +44,9 @@ object CalScore{
 
 
 
-  def calStudyExpScore(UnivRank: Double, QualificationFactor:Double, SpecFactor: Double,
+  def calStudyExpScore(UnivRank: Int, QualificationFactor:Double, SpecFactor: Double,
                        Score: Int
-                      ): Double = UnivRank * QualificationFactor * SpecFactor * Score
+                      ): Double = UnivRankMap.apply(UnivRank) * QualificationFactor * SpecFactor * Score
 
   def calWorkExpScore(Score: Int, DesignationFactor: Double, DurationFactor:Double): Double =
     DesignationFactor * DurationFactor * Score

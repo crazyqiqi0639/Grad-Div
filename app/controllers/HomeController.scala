@@ -77,9 +77,7 @@ class HomeController @Inject()(
   }
 
   def index = Action { implicit request: Request[AnyContent] =>
-    Ok{
-      request.flash.get("success").getOrElse("Welcome Stranger!")
-    }
+    Ok(views.html.index())
   }
 
   def createStudent = Action.async{ implicit request =>
