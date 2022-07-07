@@ -1,7 +1,7 @@
 package controllers
 
 import dao.{StudentDAO, StudyExpDAO}
-import model.{SpecFactor, Student, StudyExp}
+import model.{SpecFactor, Student, StudyExp, searchDemo}
 
 import javax.inject._
 import play.api._
@@ -40,6 +40,14 @@ class HomeController @Inject()(
       )(Student.apply)(Student.unapply)
     )
 
+
+
+  val searchDemoForm: Form[searchDemo] = Form(
+    mapping(
+      "name" -> default(text(), "")
+    )(searchDemo.apply)(searchDemo.unapply)
+  )
+
   val studyExpForm: Form[StudyExp] = Form(
     mapping(
             "application_number" -> longNumber,
@@ -72,6 +80,23 @@ class HomeController @Inject()(
         for {
           _ <- studentDao.update(AppNum, student)
         } yield Redirect(routes.HomeController.studentIndex)
+      }
+    )
+  }
+
+  def studentSearchIndex= Action.async { implicit  request =>
+    studentDao.all().map {
+      case students => Ok(views.html.searchDemo(students, searchDemoForm))
+    }
+  }
+
+  def searchStudent = Action.async{ implicit request =>
+    searchDemoForm.bindFromRequest().fold(
+      formWithErrors => studentDao.all().map(students => BadRequest(views.html.searchDemo(students, formWithErrors))),
+      name => {
+        for {
+          students <- studentDao.findByName(name.Name)
+        } yield Ok(views.html.searchDemo(students, searchDemoForm))
       }
     )
   }
@@ -112,12 +137,6 @@ class HomeController @Inject()(
     ))
     Redirect(routes.HomeController.studentIndex)
   }
-
-//  def deleteStudent(AppNum: Long) = Action.async { implicit request =>
-//    for {
-//      _ <- studentDao.delete(AppNum)
-//    } yield Redirect(routes.HomeController.studentIndex)
-//  }
 
   def saveStudent = Action.async{ implicit request =>
     studentForm.bindFromRequest().fold(

@@ -20,6 +20,9 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
 
   def insert(student: Student) :Future[Unit] = db.run(Students += student).map{ _ => ()}
 
+  def findByName(Name: String): Future[Seq[Student]] =
+    db.run(Students.filter(_.Name like("%"+Name+"%")).result)
+
   def findByAppNum(AppNum: Long): Future[Option[Student]] =
     db.run(Students.filter(_.applicationNum === AppNum).result.headOption)
 

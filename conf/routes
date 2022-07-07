@@ -73,5 +73,8 @@ POST          /upload                            controllers.FileController.uplo
 POST          /ajaxUpload                        controllers.FileController.ajaxUpload
 GET           /toUpload                          controllers.FileController.toUpload
 
+GET           /demo                              controllers.HomeController.studentSearchIndex
+GET           /demo/search                       controllers.HomeController.searchStudent
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

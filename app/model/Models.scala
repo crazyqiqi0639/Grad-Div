@@ -76,3 +76,7 @@ case class CompanyMatch(
                        ShortName:String,
                        OriginalName:String
                        )
+
+case class searchDemo(
+                     Name: String
+                     )
