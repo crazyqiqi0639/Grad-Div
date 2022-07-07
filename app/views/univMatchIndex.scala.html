@@ -1,0 +1,27 @@
+@import model.UnivMatch
+@(universityForm: Form[UnivMatch], universities: Seq[UnivMatch])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("University database") {
+    <div>
+        <div id="actions">
+            <a class="btn success" id="add" href="@routes.MatchController.createUniversity">Add a new University Mapping</a>
+        </div>
+
+        <div id="students">
+            <h2>University Mapping:</h2>
+            <table>
+                <tr><th>Name</th><th>Country</th><th>Other Information</th><th>Scheme</th><th>Rank</th><th>Delete</th></tr>
+                @for(u <- universities){
+                    <tr>
+                        <td>@u.ShortName</td>
+                        <td>@u.OriginalName</td>
+                        <td>
+                            <a href="@routes.MatchController.deleteUniversity(u.ShortName)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

@@ -76,3 +76,8 @@ CREATE TABLE specfactor(
                         name Char(100) PRIMARY KEY NOT NULL,
                         factor float
 );
+
+CREATE TABLE univmatch(
+                        shortname Char(100) PRIMARY KEY NOT NULL,
+                        name Char(100)
+);

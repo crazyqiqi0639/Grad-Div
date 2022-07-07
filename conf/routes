@@ -56,6 +56,17 @@ GET     /specFactor/:name/delete     controllers.ScoreController.delete(name: St
 
 POST    /specFactor/:name/delete           controllers.ScoreController.delete(name: String)
 
+GET     /univMatch                controllers.MatchController.univMatchIndex
+
+GET     /univMatch/new            controllers.MatchController.createUniversity
+POST    /univMatch                controllers.MatchController.saveUniversity
+
+GET     /univMatch/:name            controllers.MatchController.editUniversity(name: String)
+POST    /univMatch/:name            controllers.MatchController.updateUniversity(name: String)
+GET     /univMatch/:name/delete     controllers.MatchController.deleteUniversity(name: String)
+
+POST    /univMatch/:name/delete           controllers.UniversityController.deleteUniversity(name: String)
+
 
 + nocsrf
 POST          /upload                            controllers.FileController.upload

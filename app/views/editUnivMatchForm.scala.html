@@ -1,0 +1,26 @@
+@import model.UnivMatch
+@(Name: String, universityForm: Form[UnivMatch])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("University Mapping database") {
+    <div>
+        <div id="universities">
+            <h2>Update University here:</h2>
+
+            @form(routes.MatchController.updateUniversity(Name)) {
+                @inputText(universityForm("shortname"))
+                @inputText(universityForm("name"))
+
+                <div class="actions">
+                    <input type="submit" value="Save This University Mapping" class="btn primary"> or
+                    <a href="@routes.MatchController.univMatchIndex" class="btn">Cancel</a>
+                </div>
+            }
+
+            @form(routes.MatchController.deleteUniversity(Name)) {
+                <input type="submit" value="Delete This University Mapping" class="btn danger">
+                }
+        </div>
+    </div>
+}

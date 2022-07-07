@@ -1,0 +1,25 @@
+@import model.UnivMatch
+@(universityForm: Form[UnivMatch])(implicit messages: Messages)
+
+@import helper._
+
+
+@main("Create a new University Mapping") {
+
+
+    <h1>Add a university</h1>
+
+    @form(routes.MatchController.saveUniversity) {
+        <fieldset>
+            @inputText(universityForm("shortname"))
+            @inputText(universityForm("name"))
+        </fieldset>
+        <div class="actions">
+            <input type="submit" value="Create This University Mapping" class="btn primary"> or
+            <a href="@routes.MatchController.univMatchIndex" class="btn">Cancel</a>
+        </div>
+
+
+    }
+
+}
