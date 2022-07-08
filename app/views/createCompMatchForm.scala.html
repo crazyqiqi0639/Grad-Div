@@ -1,0 +1,25 @@
+@import model.CompanyMatch
+@(companyForm: Form[CompanyMatch])(implicit messages: Messages)
+
+@import helper._
+
+
+@main("Create a new Company Mapping") {
+
+
+    <h1>Add a Company Mapping</h1>
+
+    @form(routes.MatchController.saveCompany) {
+        <fieldset>
+            @inputText(companyForm("shortname"))
+            @inputText(companyForm("name"))
+        </fieldset>
+        <div class="actions">
+            <input type="submit" value="Create This Company Mapping" class="btn primary"> or
+            <a href="@routes.MatchController.compMatchIndex" class="btn">Cancel</a>
+        </div>
+
+
+    }
+
+}

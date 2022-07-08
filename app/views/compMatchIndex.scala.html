@@ -1,0 +1,30 @@
+@import model.CompanyMatch
+@(companyForm: Form[CompanyMatch], companies: Seq[CompanyMatch])(implicit request: MessagesRequestHeader)
+@import helper._
+
+@main("Company Mapping database") {
+    <div>
+        <div id="actions">
+            <a class="btn success" id="add" href="@routes.MatchController.createCompany">Add a new Company Mapping</a>
+        </div>
+
+        <div id="students">
+            <h2>Company Mapping:</h2>
+            <table>
+                <tr><th>Short Name</th><th>Original</th><th>Delete</th><th>Edit</th></tr>
+                @for(u <- companies){
+                    <tr>
+                        <td>@u.ShortName</td>
+                        <td>@u.OriginalName</td>
+                        <td>
+                            <a href="@routes.MatchController.deleteCompany(u.ShortName)">Delete</a>
+                        </td>
+                        <td>
+                            <a href="@routes.MatchController.editCompany(u.ShortName)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

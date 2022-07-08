@@ -1,0 +1,26 @@
+@import model.CompanyMatch
+@(Name: String, companyForm: Form[CompanyMatch])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@main("Company Mapping database") {
+    <div>
+        <div id="universities">
+            <h2>Update Company here:</h2>
+
+            @form(routes.MatchController.updateCompany(Name)) {
+                @inputText(companyForm("shortname"))
+                @inputText(companyForm("name"))
+
+                <div class="actions">
+                    <input type="submit" value="Save This Company Mapping" class="btn primary"> or
+                    <a href="@routes.MatchController.compMatchIndex" class="btn">Cancel</a>
+                </div>
+            }
+
+            @form(routes.MatchController.deleteCompany(Name)) {
+                <input type="submit" value="Delete This University Mapping" class="btn danger">
+                }
+        </div>
+    </div>
+}

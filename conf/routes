@@ -56,6 +56,8 @@ GET     /specFactor/:name/delete     controllers.ScoreController.delete(name: St
 
 POST    /specFactor/:name/delete           controllers.ScoreController.delete(name: String)
 
+GET      /match                   controllers.MatchController.index
+
 GET     /univMatch                controllers.MatchController.univMatchIndex
 
 GET     /univMatch/new            controllers.MatchController.createUniversity
@@ -65,7 +67,18 @@ GET     /univMatch/:name            controllers.MatchController.editUniversity(n
 POST    /univMatch/:name            controllers.MatchController.updateUniversity(name: String)
 GET     /univMatch/:name/delete     controllers.MatchController.deleteUniversity(name: String)
 
-POST    /univMatch/:name/delete           controllers.UniversityController.deleteUniversity(name: String)
+POST    /univMatch/:name/delete           controllers.MatchController.deleteUniversity(name: String)
+
+GET     /companyMatch                controllers.MatchController.compMatchIndex
+
+GET     /companyMatch/new            controllers.MatchController.createCompany
+POST    /companyMatch                controllers.MatchController.saveCompany
+
+GET     /companyMatch/:name            controllers.MatchController.editCompany(name: String)
+POST    /companyMatch/:name            controllers.MatchController.updateCompany(name: String)
+GET     /companyMatch/:name/delete     controllers.MatchController.deleteCompany(name: String)
+
+POST    /companyMatch/:name/delete           controllers.MatchController.deleteCompany(name: String)
 
 
 + nocsrf

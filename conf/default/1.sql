@@ -81,3 +81,8 @@ CREATE TABLE univmatch(
                         shortname Char(100) PRIMARY KEY NOT NULL,
                         name Char(100)
 );
+
+CREATE TABLE companymatch(
+                          shortname Char(100) PRIMARY KEY NOT NULL,
+                          name Char(100)
+);
