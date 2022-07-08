@@ -2,9 +2,9 @@
 
 ## 7.3-7.10 Plan
 
-* Add Search function
+* Add Search function ✅
 * Add Match Table For University ✅
-* Add Match Table For Company
+* Add Match Table For Company ✅
 * Update Score Part For StudyExp, Student and WorkExp
 
 ## Introduction
