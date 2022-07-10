@@ -85,14 +85,14 @@ class HomeController @Inject()(
   }
 
   def studentSearchIndex= Action.async { implicit  request =>
-    studentDao.all().map {
+    studentDao.list().map {
       case students => Ok(views.html.searchDemo(students, searchDemoForm))
     }
   }
 
   def searchStudent = Action.async{ implicit request =>
     searchDemoForm.bindFromRequest().fold(
-      formWithErrors => studentDao.all().map(students => BadRequest(views.html.searchDemo(students, formWithErrors))),
+      formWithErrors => studentDao.list().map(students => BadRequest(views.html.searchDemo(students, formWithErrors))),
       name => {
         for {
           students <- studentDao.findByName(name.Name)

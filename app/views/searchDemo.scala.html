@@ -1,6 +1,7 @@
 @import model.Student
 @import model.searchDemo
-@(students: Seq[Student],studentForm: Form[searchDemo])(implicit messages: Messages)
+@import model.StudyExp
+@(students: Seq[(Student,StudyExp)],studentForm: Form[searchDemo])(implicit messages: Messages)
 @import helper._
 
 @main("Student database") {
@@ -17,17 +18,21 @@
         <div id="students">
             <h2>Previously inserted students:</h2>
             <table>
-                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>Delete</th><th>Edit</th></tr>
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>School Name</th><th>School Location</th><th>Specialisation</th><th>Delete</th><th>Edit</th></tr>
                 @for(s <- students){
                     <tr>
-                        <td>@s.ApplicationNum</td>
-                        <td>@s.Name</td>
-                        <td>@s.Gender</td>
+                        <td>@s._1.ApplicationNum</td>
+                        <td>@s._1.Name</td>
+                        <td>@s._1.Gender</td>
+                        <td>@s._2.Name</td>
+                        <td>@s._2.Location</td>
+                        <td>@s._2.Specialisation</td>
+                        <td>@s._2.Gpa / @s._2.BestScore</td>
                         <td>
-                            <a href="@routes.HomeController.deleteStudent(s.ApplicationNum)">Delete</a>
+                            <a href="@routes.HomeController.deleteStudent(s._1.ApplicationNum)">Delete</a>
                         </td>
                         <td>
-                            <a href="@routes.HomeController.editStudent(s.ApplicationNum)">Edit</a>
+                            <a href="@routes.HomeController.editStudent(s._1.ApplicationNum)">Edit</a>
                         </td>
                     </tr>
                 }
