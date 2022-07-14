@@ -34,7 +34,7 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
 
     val query_3 = {
       query.filter{
-        case (a, b) => (a.Name like("%" + Name + "%")) || (b.Name like("%" + Name + "%")) || (b.Location like("%" + Name + "%"))
+        case (a, b) => (a.Name.toLowerCase like("%" + Name.toLowerCase + "%")) || (b.Name.toLowerCase like("%" + Name.toLowerCase + "%")) || (b.Location.toLowerCase like("%" + Name.toLowerCase + "%")) || (b.Specialisation.toLowerCase like("%" + Name.toLowerCase + "%"))
       }
     }
     db.run(query_3.result)

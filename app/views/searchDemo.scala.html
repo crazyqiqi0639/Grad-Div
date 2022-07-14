@@ -10,9 +10,20 @@
         @form(routes.HomeController.searchStudent) {
                 @inputText(studentForm("name"))
             <div class="actions">
-                <input type="submit" value="Create this student" class="btn primary">
+                <input type="submit" value="search" class="btn primary">
             </div>
         }
+            <label><input value="H1A" id="H1A_filter" name="location_filter" type="checkbox">H1A | </label>
+            <label><input value="H1B" id="H1B_filter" name="location_filter" type="checkbox">H1B | </label>
+            <label><input value="H2A" id="H2A_filter" name="location_filter" type="checkbox">H2A | </label>
+            <label><input value="H2B" id="H2B_filter" name="location_filter" type="checkbox">H2B | </label>
+            <label><input value="H3A" id="H3A_filter" name="location_filter" type="checkbox" checked="">H3A | </label>
+            <label><input value="H3B" id="H3B_filter" name="location_filter" type="checkbox">H3B | </label>
+            <label><input value="H5A" id="H5A_filter" name="location_filter" type="checkbox" checked="">H5A | </label>
+            <label><input value="H5B" id="H5B_filter" name="location_filter" type="checkbox" checked="">H5B | </label>
+            <label><input value="H6A" id="H6A_filter" name="location_filter" type="checkbox" checked="">H6A | </label>
+            <label><input value="H6B" id="H6B_filter" name="location_filter" type="checkbox" checked="">H6B | </label>
+            <label><input value="Backshop" id="backshop_filter" name="location_filter" type="checkbox" checked="">Backshop</label>
         </div>
 
         <div id="students">
