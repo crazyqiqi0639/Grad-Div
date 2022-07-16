@@ -1,7 +1,8 @@
 @import model.Student
 @import model.searchDemo
 @import model.StudyExp
-@(students: Seq[(Student,StudyExp)],studentForm: Form[searchDemo])(implicit messages: Messages)
+@import scala.collection.mutable
+@(students: Seq[(Student,StudyExp)],studentForm: Form[searchDemo], checkboxMap: mutable.Map[String, Boolean])(implicit messages: Messages)
 @import helper._
 
 @main("Student database") {
@@ -13,29 +14,35 @@
                 <input type="submit" value="search" class="btn primary">
             </div>
         }
-            <label><input value="H1A" id="H1A_filter" name="location_filter" type="checkbox">H1A | </label>
-            <label><input value="H1B" id="H1B_filter" name="location_filter" type="checkbox">H1B | </label>
-            <label><input value="H2A" id="H2A_filter" name="location_filter" type="checkbox">H2A | </label>
-            <label><input value="H2B" id="H2B_filter" name="location_filter" type="checkbox">H2B | </label>
-            <label><input value="H3A" id="H3A_filter" name="location_filter" type="checkbox" checked="">H3A | </label>
-            <label><input value="H3B" id="H3B_filter" name="location_filter" type="checkbox">H3B | </label>
-            <label><input value="H5A" id="H5A_filter" name="location_filter" type="checkbox" checked="">H5A | </label>
-            <label><input value="H5B" id="H5B_filter" name="location_filter" type="checkbox" checked="">H5B | </label>
-            <label><input value="H6A" id="H6A_filter" name="location_filter" type="checkbox" checked="">H6A | </label>
-            <label><input value="H6B" id="H6B_filter" name="location_filter" type="checkbox" checked="">H6B | </label>
-            <label><input value="Backshop" id="backshop_filter" name="location_filter" type="checkbox" checked="">Backshop</label>
+            <div>
+            <label class="checkbox-inline">
+                <input
+                type="checkbox"
+                name="@(studentForm("name") + "[]")"
+                value="name">
+                @{
+                    checkboxMap += ("name" -> !checkboxMap.apply("name"))
+                }
+            </label>
+            </div>
+
         </div>
+
+
 
         <div id="students">
             <h2>Previously inserted students:</h2>
             <table>
-                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>School Name</th><th>School Location</th><th>Specialisation</th><th>Delete</th><th>Edit</th></tr>
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th>@if(checkboxMap("name")){<th>School Name</th>}<th>School Location</th><th>Specialisation</th><th>Delete</th><th>Edit</th></tr>
                 @for(s <- students){
                     <tr>
                         <td>@s._1.ApplicationNum</td>
                         <td>@s._1.Name</td>
                         <td>@s._1.Gender</td>
-                        <td>@s._2.Name</td>
+                        @if(checkboxMap("name")){
+                            @println(checkboxMap)
+                            <td>@s._2.Name</td>
+                        }
                         <td>@s._2.Location</td>
                         <td>@s._2.Specialisation</td>
                         <td>@s._2.Gpa / @s._2.BestScore</td>

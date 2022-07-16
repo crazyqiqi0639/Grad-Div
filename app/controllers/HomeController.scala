@@ -1,17 +1,17 @@
 package controllers
 
 import dao.{StudentDAO, StudyExpDAO}
-import model.{SpecFactor, Student, StudyExp, searchDemo}
+import model.{Student, StudyExp, searchDemo}
 
 import javax.inject._
-import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.libs.json.Json
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
+import scala.collection.mutable
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -40,6 +40,8 @@ class HomeController @Inject()(
       )(Student.apply)(Student.unapply)
     )
 
+  val studentMap: mutable.Map[String, Boolean] = mutable.Map("name" -> true)
+
 
 
   val searchDemoForm: Form[searchDemo] = Form(
@@ -67,13 +69,11 @@ class HomeController @Inject()(
     )(StudyExp.apply)(StudyExp.unapply)
   )
 
-  def studentIndex= Action.async { implicit  request =>
-    studentDao.all().map {
-      case students => Ok(views.html.studentIndex(students))
-    }
+  def studentIndex: Action[AnyContent]= Action.async { implicit  request =>
+    studentDao.all().map(students => Ok(views.html.studentIndex(students)))
   }
 
-  def updateStudent(AppNum: Long) = Action.async { implicit request =>
+  def updateStudent(AppNum: Long): Action[AnyContent] = Action.async { implicit request =>
     studentForm.bindFromRequest().fold(
       formWithErrors => studyExpDAO.findAllByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp))),
       student => {
@@ -84,53 +84,51 @@ class HomeController @Inject()(
     )
   }
 
-  def studentSearchIndex= Action.async { implicit  request =>
-    studentDao.list().map {
-      case students => Ok(views.html.searchDemo(students, searchDemoForm))
-    }
+  def studentSearchIndex: Action[AnyContent]= Action.async { implicit  request =>
+    studentDao.list().map(students => Ok(views.html.searchDemo(students, searchDemoForm, studentMap)))
   }
 
-  def searchStudent = Action.async{ implicit request =>
+  def searchStudent: Action[AnyContent] = Action.async { implicit request =>
     searchDemoForm.bindFromRequest().fold(
-      formWithErrors => studentDao.list().map(students => BadRequest(views.html.searchDemo(students, formWithErrors))),
+      formWithErrors => studentDao.list().map(students => BadRequest(views.html.searchDemo(students, formWithErrors, studentMap))),
       name => {
         for {
           students <- studentDao.findByName(name.Name)
-        } yield Ok(views.html.searchDemo(students, searchDemoForm))
+        } yield Ok(views.html.searchDemo(students, searchDemoForm, studentMap))
       }
     )
   }
 
-  def index = Action { implicit request: Request[AnyContent] =>
+  def index: Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
 
-  def createStudent = Action.async{ implicit request =>
+  def createStudent: Action[AnyContent] = Action.async { implicit request =>
     studentDao.all().map(_ => Ok(views.html.createStudentForm(studentForm)))
 
   }
 
-  def insertStudent = Action.async { implicit request =>
+  def insertStudent(): Action[AnyContent] = Action.async { implicit request =>
     val student: Student = studentForm.bindFromRequest().get
     studentDao.insert(student).map(_ => Redirect(routes.HomeController.studentIndex))
   }
 
-  def editStudent(AppNum: Long) = Action.async{ implicit request =>
+  def editStudent(AppNum: Long): Action[AnyContent] = Action.async { implicit request =>
     val studentInfo = for {
       student <- studentDao.findByAppNum(AppNum)
       studyExp <- studyExpDAO.findAllByAppNum(AppNum)
     } yield (student, studyExp)
 
-    studentInfo.map{
+    studentInfo.map {
       case (student, studyExp) =>
         student match {
           case Some(s) => Ok(views.html.editStudentForm(AppNum, studentForm.fill(s), studyExp))
           case None => NotFound
         }
-      }
     }
+  }
 
-  def deleteStudent(AppNum: Long) = Action{
+  def deleteStudent(AppNum: Long): Action[AnyContent] = Action {
     studentDao.delete(AppNum)
     Ok(Json.obj(
       "status" -> 200
@@ -138,7 +136,7 @@ class HomeController @Inject()(
     Redirect(routes.HomeController.studentIndex)
   }
 
-  def saveStudent = Action.async{ implicit request =>
+  def saveStudent:Action[AnyContent] = Action.async{ implicit request =>
     studentForm.bindFromRequest().fold(
       formWithErrors => studentDao.all().map(_ => BadRequest(views.html.createStudentForm(formWithErrors))),
       student => {

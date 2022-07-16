@@ -53,6 +53,17 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     db.run(query.result)
   }
 
+  def check(checkbox: Map[String, Boolean]): Future[Seq[Student]] = {
+    if (checkbox.apply("name")) {
+      val q = for {
+        c <- Students
+      } yield(c.applicationNum)
+      db.run(Students.result)
+    } else {
+      db.run(Students.result)
+    }
+  }
+
   def delete(AppNum: Long): Future[Unit] =
     db.run(Students.filter(_.applicationNum === AppNum).delete).map(_ => ())
 
