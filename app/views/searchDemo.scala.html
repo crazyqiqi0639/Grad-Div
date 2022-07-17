@@ -2,7 +2,7 @@
 @import model.searchDemo
 @import model.StudyExp
 @import scala.collection.mutable
-@(students: Seq[(Student,StudyExp)],studentForm: Form[searchDemo], checkboxMap: mutable.Map[String, Boolean])(implicit messages: Messages)
+@(students: Seq[(Student,StudyExp)],studentForm: Form[searchDemo])(implicit messages: Messages)
 @import helper._
 
 @main("Student database") {
@@ -15,34 +15,34 @@
             </div>
         }
             <div>
-            <label class="checkbox-inline">
-                <input
-                type="checkbox"
-                name="@(studentForm("name") + "[]")"
-                value="name">
-                @{
-                    checkboxMap += ("name" -> !checkboxMap.apply("name"))
-                }
-            </label>
+                <label style="margin-left: 10px">
+                    <input type="checkbox" name="category" checked>Application Number
+                    <input type="checkbox" name="category" checked>Name
+                    <input type="checkbox" name="category" checked>Gender
+                    <input type="checkbox" name="category" checked>School Name
+                    <input type="checkbox" name="category" checked>School Location
+                    <input type="checkbox" name="category" checked>Specialisation
+                    <input type="checkbox" name="category" checked>GPA
+
+                </label>
             </div>
 
         </div>
 
 
 
+
+
         <div id="students">
             <h2>Previously inserted students:</h2>
-            <table>
-                <tr><th>Application Number</th><th>Name</th><th>Gender</th>@if(checkboxMap("name")){<th>School Name</th>}<th>School Location</th><th>Specialisation</th><th>Delete</th><th>Edit</th></tr>
+            <table id="t">
+                <tr><th>Application Number</th><th>Name</th><th>Gender</th><th>School Name</th><th>School Location</th><th>Specialisation</th><th>GPA</th><th>Delete</th><th>Edit</th></tr>
                 @for(s <- students){
                     <tr>
                         <td>@s._1.ApplicationNum</td>
                         <td>@s._1.Name</td>
                         <td>@s._1.Gender</td>
-                        @if(checkboxMap("name")){
-                            @println(checkboxMap)
-                            <td>@s._2.Name</td>
-                        }
+                        <td>@s._2.Name</td>
                         <td>@s._2.Location</td>
                         <td>@s._2.Specialisation</td>
                         <td>@s._2.Gpa / @s._2.BestScore</td>
@@ -57,4 +57,43 @@
             </table>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+            $(function(){
+
+                function showcategory(){
+                    var category = document.getElementsByName("category");
+                    var tab = document.getElementById("t");
+                    var leng = category.length;
+                    for(var j = 0;j<leng;j++){
+
+                        console.log(category[j].checked);
+
+                        if(category[j].checked){
+                            var trs = tab.rows;
+                            for(var i = 0, len = trs.length; i < len; i++){
+                                var cell = trs[i].cells[j];
+                                cell.style.display = 'table-cell';
+
+                            }
+                        }else{
+                            var trs = tab.rows;
+                            for(var i = 0, len = trs.length; i < len; i++){
+                                var cell = trs[i].cells[j];
+                                cell.style.display = 'none';
+                            }
+
+                        }
+
+                    }
+                }
+                showcategory();
+                $("input[name='category']") .click(function(){
+                    showcategory();
+                })
+            })
+
+
+    </script>
 }

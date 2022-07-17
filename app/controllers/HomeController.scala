@@ -40,8 +40,6 @@ class HomeController @Inject()(
       )(Student.apply)(Student.unapply)
     )
 
-  val studentMap: mutable.Map[String, Boolean] = mutable.Map("name" -> true)
-
 
 
   val searchDemoForm: Form[searchDemo] = Form(
@@ -85,16 +83,16 @@ class HomeController @Inject()(
   }
 
   def studentSearchIndex: Action[AnyContent]= Action.async { implicit  request =>
-    studentDao.list().map(students => Ok(views.html.searchDemo(students, searchDemoForm, studentMap)))
+    studentDao.list().map(students => Ok(views.html.searchDemo(students, searchDemoForm)))
   }
 
   def searchStudent: Action[AnyContent] = Action.async { implicit request =>
     searchDemoForm.bindFromRequest().fold(
-      formWithErrors => studentDao.list().map(students => BadRequest(views.html.searchDemo(students, formWithErrors, studentMap))),
+      formWithErrors => studentDao.list().map(students => BadRequest(views.html.searchDemo(students, formWithErrors))),
       name => {
         for {
           students <- studentDao.findByName(name.Name)
-        } yield Ok(views.html.searchDemo(students, searchDemoForm, studentMap))
+        } yield Ok(views.html.searchDemo(students, searchDemoForm))
       }
     )
   }
