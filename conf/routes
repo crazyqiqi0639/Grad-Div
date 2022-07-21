@@ -6,6 +6,8 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
+GET     /api/todos                  controllers.HomeController.getAll
+
 GET     /student                    controllers.HomeController.studentIndex
 
 POST    /insert/student             controllers.HomeController.insertStudent

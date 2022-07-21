@@ -71,6 +71,12 @@ class HomeController @Inject()(
     studentDao.all().map(students => Ok(views.html.studentIndex(students)))
   }
 
+  implicit val todoFormat = Json.format[Student]
+
+  def getAll = Action.async{implicit request =>
+    studentDao.all().map(students => Ok(Json.toJson(students)))
+  }
+
   def updateStudent(AppNum: Long): Action[AnyContent] = Action.async { implicit request =>
     studentForm.bindFromRequest().fold(
       formWithErrors => studyExpDAO.findAllByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp))),
