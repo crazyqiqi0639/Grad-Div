@@ -14,7 +14,7 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
   import profile.api._
 
   private val Students = TableQuery[StudentTable]
-  private val workExps = TableQuery[WorkExpTable]
+//  private val workExps = TableQuery[WorkExpTable]
   private val StudyExps = TableQuery[StudyExpTable]
 
   def all(): Future[Seq[Student]] = db.run(Students.result)
@@ -22,12 +22,12 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
   def insert(student: Student) :Future[Unit] = db.run(Students += student).map{ _ => ()}
 
   def findByName(Name: String): Future[Seq[(Student,StudyExp)]] = {
-    val query_1 = {
-      Students.joinLeft(StudyExps.filter(_.Name like("%"+Name+"%"))).on(_.applicationNum ===_.applicationNum).result
-    }
-    val query_2 = {
-      Students.joinLeft(StudyExps).on(_.applicationNum ===_.applicationNum).filter(m => (m._1.Name like("%"+Name+"%"))).result
-    }
+//    val query_1 = {
+//      Students.joinLeft(StudyExps.filter(_.Name like("%"+Name+"%"))).on(_.applicationNum ===_.applicationNum).result
+//    }
+//    val query_2 = {
+//      Students.joinLeft(StudyExps).on(_.applicationNum ===_.applicationNum).filter(m => (m._1.Name like("%"+Name+"%"))).result
+//    }
     val query = for {
       (a, b) <- Students join (StudyExps) on(_.applicationNum ===_.applicationNum)
     } yield (a, b)
@@ -47,21 +47,10 @@ class StudentDAO  @Inject() (protected val dbConfigProvider: DatabaseConfigProvi
     val query = {
       Students.join(StudyExps).on(_.applicationNum ===_.applicationNum)
     }
-    val query_2 = {
-      query.join(workExps).on(_._1.applicationNum === _.applicationNum)
-    }
+//    val query_2 = {
+//      query.join(workExps).on(_._1.applicationNum === _.applicationNum)
+//    }
     db.run(query.result)
-  }
-
-  def check(checkbox: Map[String, Boolean]): Future[Seq[Student]] = {
-    if (checkbox.apply("name")) {
-      val q = for {
-        c <- Students
-      } yield(c.applicationNum)
-      db.run(Students.result)
-    } else {
-      db.run(Students.result)
-    }
   }
 
   def delete(AppNum: Long): Future[Unit] =

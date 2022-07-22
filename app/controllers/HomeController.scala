@@ -11,7 +11,6 @@ import play.api.data.format.Formats._
 import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext
-import scala.collection.mutable
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
