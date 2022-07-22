@@ -7,6 +7,7 @@
 GET     /                           controllers.HomeController.index
 
 GET     /api/todos                  controllers.HomeController.getAll
+GET     /api/todos2/:id             controllers.HomeController.get(id: Long)
 
 GET     /student                    controllers.HomeController.studentIndex
 

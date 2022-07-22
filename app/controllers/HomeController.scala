@@ -10,7 +10,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.libs.json.Json
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -70,15 +70,24 @@ class HomeController @Inject()(
     studentDao.all().map(students => Ok(views.html.studentIndex(students)))
   }
 
-  implicit val todoFormat = Json.format[Student]
+  implicit val StudentFormat = Json.format[Student]
+  implicit val StudyExpFormat = Json.format[StudyExp]
+  implicit val StudentInfoFormat = Json.format[(Student, StudyExp)]
 
-  def getAll = Action.async{implicit request =>
+  def getAll: Action[AnyContent] = Action.async { implicit request =>
     studentDao.all().map(students => Ok(Json.toJson(students)))
+  }
+
+  def get(id: Long): Action[AnyContent] = Action.async{ implicit request =>
+    studentDao.findByAppNum(id).map(student => Ok(Json.toJson(student)))
   }
 
   def updateStudent(AppNum: Long): Action[AnyContent] = Action.async { implicit request =>
     studentForm.bindFromRequest().fold(
-      formWithErrors => studyExpDAO.findAllByAppNum(AppNum).map(studyExp => BadRequest(views.html.editStudentForm(AppNum, formWithErrors, studyExp))),
+      formWithErrors => {
+        formWithErrors.errors.foreach(println)
+        Future.successful(BadRequest("Error!"))
+      },
       student => {
         for {
           _ <- studentDao.update(AppNum, student)
@@ -97,7 +106,8 @@ class HomeController @Inject()(
       name => {
         for {
           students <- studentDao.findByName(name.Name)
-        } yield Ok(views.html.searchDemo(students, searchDemoForm))
+        } yield Ok(Json.toJson(students))
+//        } yield Ok(views.html.searchDemo(students, searchDemoForm))
       }
     )
   }
