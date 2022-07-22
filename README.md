@@ -1,20 +1,5 @@
 # Grad-Div
 
-## 7.11-7.17
-* Update Student View Page.
-* Update Search Function.
-* Update Score Function.
-* Update Search Box.
-* Add University information to the System.
-* Maybe Try to separate backend and frontend.
-
-## 7.3-7.10 Plan
-
-* Add Search function ✅
-* Add Match Table For University ✅
-* Add Match Table For Company ✅
-* Update Score Part For StudyExp, Student and WorkExp ❎
-
 ## Introduction
 
 During the application season, the school will receive a huge number of applications. 
