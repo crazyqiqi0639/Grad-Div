@@ -1,18 +1,19 @@
 package controllers
 
-import dao.{IeltsDAO, StudentDAO, StudyExpDAO, ToeflDAO, WorkExpDAO}
-import model.{Ielts, Student, StudyExp, Toefl, WorkExp}
+import dao.{IeltsDAO, StudentDAO, StudyExpDAO, ToeflDAO, UnivMatchDAO, UniversityDAO, WorkExpDAO}
+import model.{Ielts, Student, StudyExp, Toefl, UnivMatch, University, WorkExp}
 
 import java.io._
 import javax.inject.{Inject, Singleton}
 import play.api.libs.Files
 import play.api.libs.json.Json
 import play.api.mvc.MultipartFormData.FilePart
-import play.api.mvc.{AbstractController, ControllerComponents}
+import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
 import java.io.{File, FileInputStream}
 import java.text.SimpleDateFormat
+import scala.io.Source
 import scala.util.control.Breaks.break
 import scala.util.Random
 
@@ -26,6 +27,8 @@ class FileController @Inject()(studentDao: StudentDAO,
                                studyExpDao: StudyExpDAO,
                                ieltsDao: IeltsDAO,
                                toeflDao: ToeflDAO,
+                               univMatchDao: UnivMatchDAO,
+                               universityDao: UniversityDAO,
                                cc: ControllerComponents) extends AbstractController(cc) {
 
 
@@ -62,31 +65,60 @@ class FileController @Inject()(studentDao: StudentDAO,
     }
   }
 
+  def uploadMaping = Action(parse.multipartFormData) {
+    implicit request => {
+      request.body.file("file").map(file => uploadMapFile(file)).getOrElse(Ok(Json.obj("status" -> "FAIL")))
+    }
+  }
+
+  private val uploadMapFile = (file: FilePart[Files.TemporaryFile]) => {
+    val source = Source.fromFile(file.ref, "UTF-8")
+    val lineIterator = source.getLines()
+    lineIterator.foreach(
+      line => {
+        val lineArray = line.trim.split(":")
+        val newMatch = UnivMatch(ShortName = lineArray.apply(1), OriginalName = lineArray.apply(0))
+        univMatchDao.insert(newMatch)
+      }
+    )
+    Ok(Json.obj("status" -> "OK"))
+  }
+
+  def uploadUniversity = Action(parse.multipartFormData) {
+    implicit request => {
+      request.body.file("file").map(file => uploadUniversityFile(file)).getOrElse(Ok(Json.obj("status" -> "FAIL")))
+    }
+  }
+
+  private val uploadUniversityFile = (file: FilePart[Files.TemporaryFile]) => {
+    val source = Source.fromFile(file.ref, "UTF-8")
+    val lineIterator = source.getLines()
+    lineIterator.foreach(
+      line => {
+        val lineArray = line.trim.split("@")
+        val country = lineArray.apply(0)
+        val rank = lineArray.apply(1)
+        if (lineArray.length.equals(3)) {
+          val name = lineArray.apply(2)
+          val univ = University(Name = name, Country = country, Other = "None", Scheme = 0, Rank = rank.toInt)
+          universityDao.insert(univ)
+
+        } else {
+          val shortname = lineArray.apply(2)
+          val name = lineArray.apply(3)
+          val univ = University(Name = name, Country = country, Other = "None", Scheme = 0, Rank = rank.toInt)
+          universityDao.insert(univ)
+          val matches = UnivMatch(ShortName = shortname, OriginalName = name)
+          univMatchDao.insert(matches)
+        }
+      }
+    )
+    Ok(Json.obj("status" -> "OK"))
+  }
+
   private val uploadFile = (file: FilePart[Files.TemporaryFile]) => {
     val sdf = new SimpleDateFormat("yyyy/MM/dd")
-    val fileName = file.filename
-    println(s"File Name:$fileName")
-    var nameSuffix = ""
-    //检测文件是否存在后缀名
-    if (fileName.lastIndexOf(".") > -1) {
-      nameSuffix = fileName.substring(fileName.lastIndexOf("."))
-      println(s"Suffix:$nameSuffix")
-
-    }
-    //给文件取新的随机名
-    val newName = new Random().nextInt(1000000000)
-    //目标目录路径
-    val toFile: File = new File("Resource/uploadFiles/")
-    if (!toFile.exists()) {
-      //不存在就创建新的文件夹
-      toFile.mkdir()
-    }
-    //准备存放的文件
-    val f = new File(s"Resource/uploadFiles/$newName$nameSuffix")
-    //将文件移动到新的文件
-    file.ref.moveTo(f, true)
-//    val filePath = new File("Resource/GDA-Data-Sample.xlsx")
-    val fs = new FileInputStream(f)
+    val fs = new FileInputStream(file.ref)
     val xssfWorkbook: XSSFWorkbook = new XSSFWorkbook(fs)
     for(i <- 0 until xssfWorkbook.getNumberOfSheets){
       //获取表格每一个sheet

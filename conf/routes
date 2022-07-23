@@ -86,6 +86,8 @@ POST    /companyMatch/:name/delete           controllers.MatchController.deleteC
 
 + nocsrf
 POST          /upload                            controllers.FileController.upload
+POST          /uploadMap                            controllers.FileController.uploadMaping
+POST          /uploadUniv                           controllers.FileController.uploadUniversity
 POST          /ajaxUpload                        controllers.FileController.ajaxUpload
 GET           /toUpload                          controllers.FileController.toUpload
 

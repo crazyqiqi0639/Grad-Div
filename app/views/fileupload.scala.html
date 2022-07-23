@@ -3,8 +3,20 @@
 <html>
     <head><title>@title</title></head>
     <body>
-        <h1>Normal File Upload</h1>
+        <h1>Applicants File Upload</h1>
         <form action="/upload" id="formData" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"/>
+            <input type="submit" value="File Upload"/>
+        </form>
+
+        <h1>Mapping File Upload</h1>
+        <form action="/uploadMap" id="formData" method="post" enctype="multipart/form-data">
+            <input type="file" name="file"/>
+            <input type="submit" value="File Upload"/>
+        </form>
+
+       <h1>University File Upload</h1>
+         <form action="/uploadUniv" id="formData" method="post" enctype="multipart/form-data">
             <input type="file" name="file"/>
             <input type="submit" value="File Upload"/>
         </form>
